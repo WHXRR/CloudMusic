@@ -1,17 +1,9 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import { renderRoutes } from 'react-router-config'
 
-import request from '@/service/request'
 
 const DisCover = memo((props) => {
   const { route } = props
-  useEffect(() => {
-    request({
-      url: 'banner'
-    }).then(res => {
-      console.log(res, 'res');
-    })
-  }, [])
 
   return (
     <div>
