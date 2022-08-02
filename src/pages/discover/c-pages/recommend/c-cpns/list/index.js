@@ -11,7 +11,7 @@ import {
   Flex
 } from './style'
 
-const Recommend = memo(() => {
+const Recommend = memo((props) => {
 
   const dispatch = useDispatch()
   const { list1, list2, list3, listLoading } = useSelector(
@@ -26,6 +26,10 @@ const Recommend = memo(() => {
   useEffect(() => {
     dispatch(getListsAction())
   }, [dispatch])
+
+  const toDetails = (id) => {
+    props.history.push(`/discover/songdetail/${id}`)
+  }
 
   return (
     <ListContent>
@@ -48,7 +52,7 @@ const Recommend = memo(() => {
           <div>
             {
               list1.songs?.map((item, idx) => (
-                <div className='song-item' key={idx}>
+                <div className='song-item' key={idx} onClick={() => toDetails(item.id)}>
                   <Flex>
                     <span className={'num ' + (idx < 3 ? 'top-few' : '')}>{idx + 1}</span>
                     <span className='song-name' title={item.name}>{item.name}</span>
@@ -79,7 +83,7 @@ const Recommend = memo(() => {
           <div className='body'>
             {
               list2.songs?.map((item, idx) => (
-                <div className='song-item' key={idx}>
+                <div className='song-item' key={idx} onClick={() => toDetails(item.id)}>
                   <Flex>
                     <span className={'num ' + (idx < 3 ? 'top-few' : '')}>{idx + 1}</span>
                     {item.name}
@@ -110,7 +114,7 @@ const Recommend = memo(() => {
           <div className='body'>
             {
               list3.songs?.map((item, idx) => (
-                <div className='song-item' key={idx}>
+                <div className='song-item' key={idx} onClick={() => toDetails(item.id)}>
                   <Flex>
                     <span className={'num ' + (idx < 3 ? 'top-few' : '')}>{idx + 1}</span>
                     {item.name}

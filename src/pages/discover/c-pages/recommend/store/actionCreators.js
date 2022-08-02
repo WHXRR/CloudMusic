@@ -16,7 +16,7 @@ export const changeHotRecommendAction = res => ({
 
 export const changeNewDiscAction = res => ({
   type: actionTypes.CHANGE_NEW_DISC,
-  newDisc: [res.albums.slice(0, 5), res.albums.slice(6, 10)]
+  newDisc: [res.albums.slice(0, 5), res.albums.slice(5, 10)]
 })
 
 export const changeListAction = (type, res) => ({

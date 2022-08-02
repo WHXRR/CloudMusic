@@ -1,1 +1,18 @@
-@import "~normalize.css"
+::-webkit-scrollbar {
+  width: 5px;
+  height: 1px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: none;
+  background: #00badb;
+  -webkit-box-shadow: none;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: none;
+  border-radius: 10px;
+  background: #e6ffff;
+  -webkit-box-shadow: none;
+}
+
+@import "~normalize.css";

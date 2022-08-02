@@ -1,3 +1,4 @@
+import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 import DisCover from '@/pages/discover'
@@ -7,6 +8,7 @@ import SongSheet from '@/pages/discover/c-pages/song-sheet'
 import AnchorStation from '@/pages/discover/c-pages/anchor-station'
 import Singer from '@/pages/discover/c-pages/singer'
 import NewDisc from '@/pages/discover/c-pages/new-disc'
+import SongDetail from '@/pages/discover/c-pages/song-detail'
 
 import Mine from '@/pages/mine'
 import Friends from '@/pages/friends'
@@ -51,6 +53,10 @@ const routes = [
       {
         path: '/discover/newdisc',
         component: NewDisc
+      },
+      {
+        path: '/discover/songdetail/:id',
+        component: SongDetail
       },
     ]
   },

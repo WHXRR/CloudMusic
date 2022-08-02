@@ -1,9 +1,12 @@
 import styled from 'styled-components'
 
 export const HeaderStyle = styled.div`
- padding-bottom: 63px;
+ padding-bottom: 62px;
   .shadow {
-    box-shadow: 5px 5px 10px #f2e4e7, -5px -5px 10px #fffcff;
+    background-color: #000;
+    a {
+      color: #fff !important;
+    }
   }
 `
 
@@ -27,10 +30,7 @@ export const HearderWrapper = styled.div`
     font-weight: bold;
     font-family: Poppins;
     text-decoration: none;
-    transition: all .3s;
-    :hover {
-      background-color: #fff;
-    }
+    transition: all .5s;
   }
   .logo {
     cursor: pointer;
@@ -44,10 +44,11 @@ export const HearderWrapper = styled.div`
     justify-self: center;
   }
   .search-ipt {
-    max-width: 300px;
-    .ant-btn-primary {
-      border-color: #00badb;
-      background-color: #00badb;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    .search-icon {
+      cursor: pointer;
     }
   }
 `
