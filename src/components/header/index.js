@@ -1,45 +1,62 @@
 import React, { memo, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { shallowEqual, useSelector } from 'react-redux'
 
 import { SmileTwoTone, SearchOutlined, UserOutlined, VerticalAlignBottomOutlined, HighlightOutlined, MehTwoTone } from '@ant-design/icons';
 import { Dropdown, Input, Menu } from 'antd';
 
 import { menu } from '@/common/header_menu'
+import LoginDialog from '../login-dialog';
 
 import {
   HearderWrapper,
   HeaderStyle
 } from './style'
 
-const otherMenu = () => (
-  <Menu
-    items={[
-      {
-        key: '1',
-        label: '登录',
-        icon: <UserOutlined />,
-      },
-      {
-        key: '2',
-        label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
-          下载客户端
-        </a>,
-        icon: <VerticalAlignBottomOutlined />,
-      },
-      {
-        key: '3',
-        label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
-          创作者中心
-        </a>,
-        icon: <HighlightOutlined />,
-      }
-    ]}
-  />
-)
-
 const Header = memo(() => {
+
+
+  const otherMenu = () => (
+    <Menu
+      onClick={onClick}
+      items={[
+        {
+          key: '1',
+          label: '登录',
+          icon: <UserOutlined />,
+        },
+        {
+          key: '2',
+          label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
+            下载客户端
+          </a>,
+          icon: <VerticalAlignBottomOutlined />,
+        },
+        {
+          key: '3',
+          label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
+            创作者中心
+          </a>,
+          icon: <HighlightOutlined />,
+        }
+      ]}
+    />
+  )
+  const onClick = ({key}) => {
+    if (key === '1') {
+      changeVisible(true)
+    }
+  }
+
+  // 登录弹窗
+  const [visible, changeVisible] = useState(false)
+  const handleOk = () => {
+    changeVisible(false)
+  }
+  const handleCancel = () => {
+    changeVisible(false)
+  }
 
   const { token } = useSelector(
     state => ({
@@ -84,6 +101,7 @@ const Header = memo(() => {
           }
         />
       </HearderWrapper>
+      <LoginDialog visible={visible} handleOk={handleOk} handleCancel={handleCancel} />
     </HeaderStyle>
   )
 })
