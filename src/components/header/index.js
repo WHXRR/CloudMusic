@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { shallowEqual, useSelector } from 'react-redux'
 
 import { SmileTwoTone, SearchOutlined, UserOutlined, VerticalAlignBottomOutlined, HighlightOutlined, MehTwoTone } from '@ant-design/icons';
-import { Dropdown, Input, Menu } from 'antd';
+import { Dropdown, Input, Menu, Drawer } from 'antd';
 
 import { menu } from '@/common/header_menu'
 import LoginDialog from '../login-dialog';
@@ -16,38 +16,34 @@ import {
 
 const Header = memo(() => {
 
-
-  const otherMenu = () => (
-    <Menu
-      onClick={onClick}
-      items={[
-        {
-          key: '1',
-          label: '登录',
-          icon: <UserOutlined />,
-        },
-        {
-          key: '2',
-          label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
-            下载客户端
-          </a>,
-          icon: <VerticalAlignBottomOutlined />,
-        },
-        {
-          key: '3',
-          label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
-            创作者中心
-          </a>,
-          icon: <HighlightOutlined />,
-        }
-      ]}
-    />
-  )
-  const onClick = ({key}) => {
+  // 个人菜单
+  const otherMenu = [
+    {
+      key: '1',
+      label: '登录',
+      icon: <UserOutlined />,
+    },
+    {
+      key: '2',
+      label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
+        下载客户端
+      </a>,
+      icon: <VerticalAlignBottomOutlined />,
+    },
+    {
+      key: '3',
+      label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
+        创作者中心
+      </a>,
+      icon: <HighlightOutlined />,
+    }
+  ]
+  const onClick = ({ key }) => {
     if (key === '1') {
       changeVisible(true)
     }
   }
+  const [drawerVisible, changeDrawerVisible] = useState(false)
 
   // 登录弹窗
   const [visible, changeVisible] = useState(false)
@@ -60,7 +56,7 @@ const Header = memo(() => {
 
   const { token } = useSelector(
     state => ({
-      token: state.getIn(['songDetail', 'token']),
+      token: state.getIn(['login', 'token']),
     }),
     shallowEqual
   )
@@ -77,15 +73,13 @@ const Header = memo(() => {
   return (
     <HeaderStyle>
       <HearderWrapper className={height ? 'shadow' : ''}>
-        <Dropdown overlay={otherMenu}>
-          {
-            token
-              ?
-              <SmileTwoTone className='logo' twoToneColor='#00badb' />
-              :
-              <MehTwoTone className='logo' twoToneColor='#00badb' />
-          }
-        </Dropdown>
+        {
+          token
+            ?
+            <SmileTwoTone className='logo' twoToneColor='#00badb' onClick={() => changeDrawerVisible(true)} />
+            :
+            <MehTwoTone className='logo' twoToneColor='#00badb' onClick={() => changeDrawerVisible(true)} />
+        }
         <div className='center'>
           <Dropdown overlay={menu}>
             <NavLink to="/discover">发现音乐</NavLink>
@@ -101,6 +95,19 @@ const Header = memo(() => {
           }
         />
       </HearderWrapper>
+      <Drawer
+        width={300}
+        visible={drawerVisible}
+        onClose={() => changeDrawerVisible(false)}
+        placement='left'
+        closable={false}
+        bodyStyle={{ padding: '10px 0' }}
+      >
+        <Menu
+          onClick={onClick}
+          items={otherMenu}
+        />
+      </Drawer>
       <LoginDialog visible={visible} handleOk={handleOk} handleCancel={handleCancel} />
     </HeaderStyle>
   )

@@ -82,7 +82,7 @@ const Comments = memo((props) => {
         <TextArea placeholder='说点什么...' rows={4} onChange={onChange} value={value} />
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+        <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="link">
           评论
         </Button>
       </Form.Item>

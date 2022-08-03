@@ -3,7 +3,9 @@ import React, { memo, useEffect } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getHotRecommendAction } from '../../store/actionCreators'
 
-import NormalSongStyle from '@/components/normal-song-style';
+import { Col, Row } from 'antd';
+
+import FlexSongStyle from '@/components/flex-song-style';
 
 import {
   HotContent,
@@ -25,11 +27,15 @@ const Recommend = memo((props) => {
 
   return (
     <HotContent>
-      {
-        hotRecommend.map(item => (
-          <NormalSongStyle key={item.id} {...item} />
-        ))
-      }
+      <Row gutter={[40, 20]}>
+        {
+          hotRecommend.map(item => (
+            <Col md={24} lg={12} xl={12} xxl={8} key={item.id}>
+              <FlexSongStyle {...item} />
+            </Col>
+          ))
+        }
+      </Row>
     </HotContent>
   )
 })

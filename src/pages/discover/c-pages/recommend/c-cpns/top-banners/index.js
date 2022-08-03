@@ -4,8 +4,15 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getBannersAction } from '../../store/actionCreators'
 
 import { Carousel } from 'antd';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { BannerStyle } from './style'
 
+const Arrow = ({ currentSlide, direction, slideCount, ...carouselProps }) =>
+  direction === 'left' ? (
+    <LeftOutlined {...carouselProps} />
+  ) : (
+    <RightOutlined {...carouselProps} />
+  )
 
 const Recommend = memo(() => {
   const dispatch = useDispatch()
@@ -22,7 +29,15 @@ const Recommend = memo(() => {
   return (
     <div>
       <BannerStyle>
-        <Carousel autoplay>
+        <Carousel
+          autoplaySpeed={2000}
+          autoplay
+          arrows
+          dots={false}
+          nextArrow={<Arrow direction="right" />}
+          prevArrow={<Arrow direction="left" />}
+          style={{ width: '100vw' }}
+        >
           {
             banner.map(item => (
               <div key={item.imageUrl}>

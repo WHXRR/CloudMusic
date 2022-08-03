@@ -16,7 +16,7 @@ export const HearderWrapper = styled.div`
   left: 0;
   right: 0;
   z-index: 99;
-  background-color: #fff;
+  background-color: #252525;
   padding: 0px 30px;
   display: grid;
   grid-template-columns: 300px 1fr 300px;
@@ -26,8 +26,7 @@ export const HearderWrapper = styled.div`
   transition: all .5s;
   a {
     padding: 20px 10px;
-    color: #222222;
-    font-weight: bold;
+    color: #fff;
     font-family: Poppins;
     text-decoration: none;
     transition: all .5s;
@@ -47,8 +46,14 @@ export const HearderWrapper = styled.div`
     border-top: none;
     border-left: none;
     border-right: none;
+    background-color: transparent;
+    .ant-input {
+      color: #fff;
+      background-color: transparent;
+    }
     .search-icon {
       cursor: pointer;
+      color: #fff;
     }
   }
 `

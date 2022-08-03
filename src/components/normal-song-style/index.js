@@ -15,8 +15,14 @@ const NormalSongStyle = memo((props) => {
       <div className='hot-img'>
         <img src={props.picUrl ? props.picUrl : props[props.img]} alt={props.name} />
         <div className='mantle'>
-          <CustomerServiceTwoTone twoToneColor='#00badb' className='icon' />
-          <div>{props.playCount}</div>
+          {
+            props.playCount ? (
+              <>
+                <CustomerServiceTwoTone twoToneColor='#00badb' className='icon' />
+                <div>{props.playCount}</div>
+              </>
+            ) : <div></div>
+          }
           <PlayCircleOutlined className='icon' />
         </div>
       </div>

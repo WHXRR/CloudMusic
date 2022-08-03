@@ -40,7 +40,7 @@ export const getBannersAction = () => {
 
 export const getHotRecommendAction = () => {
   return dispatch => {
-    recommendService.getHotRecommend(10).then(res => {
+    recommendService.getHotRecommend(9).then(res => {
       dispatch(changeHotRecommendAction(res))
     })
   }
