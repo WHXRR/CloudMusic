@@ -22,6 +22,16 @@ const changeHotCommentAction = (comment) => ({
   comment,
 })
 
+const changeCommentAction = (comment) => ({
+  type: actionTypes.CHANGE_COMMENT,
+  comment,
+})
+
+const changeTotalCommentAction = (total) => ({
+  type: actionTypes.CHANGE_TOTAL_COMMENT,
+  total,
+})
+
 const changeSimiSongAction = (song) => ({
   type: actionTypes.CHANGE_SIMI_SONG,
   song,
@@ -59,6 +69,23 @@ export const getHotCommentAction = (id) => {
         }
       })
       dispatch(changeHotCommentAction(comments))
+    })
+  }
+}
+
+export const getCommentAction = (id, limit, offset) => {
+  return (dispatch) => {
+    songService.getSongComment(id, limit, offset).then((res) => {
+      const newComments = res.comments.map(item => {
+        return {
+          content: item.content,
+          ...item.user,
+          timeStr: item.timeStr,
+          likedCount: item.likedCount,
+        }
+      })
+      dispatch(changeCommentAction(newComments))
+      dispatch(changeTotalCommentAction(res.total))
     })
   }
 }

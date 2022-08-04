@@ -6,9 +6,7 @@ const defaultState = Map({
   hotRecommend: [],
   newDisc: [],
   listLoading: true,
-  list1: {},
-  list2: {},
-  list3: {}
+  list: []
 })
 
 function reducer(state = defaultState, action) {
@@ -19,12 +17,8 @@ function reducer(state = defaultState, action) {
       return state.set('hotRecommend', action.hotRecommend)
     case actionTypes.CHANGE_NEW_DISC:
       return state.set('newDisc', action.newDisc)
-    case actionTypes.CHANGE_LISTS1:
-      return state.set('list1', action.songs)
-    case actionTypes.CHANGE_LISTS2:
-      return state.set('list2', action.songs)
-    case actionTypes.CHANGE_LISTS3:
-      return state.set('list3', action.songs)
+    case actionTypes.CHANGE_LISTS:
+      return state.set('list', action.list)
     case actionTypes.CHANGE_LISTS_LOADING:
       return state.set('listLoading', action.data)
     default:

@@ -31,7 +31,7 @@ const Recommend = memo((props) => {
         {
           hotRecommend.map(item => (
             <Col md={24} lg={12} xl={12} xxl={8} key={item.id}>
-              <FlexSongStyle {...item} />
+              <FlexSongStyle {...item} onClick={() => props.history.push(`/discover/songlistdetails/${item.id}`)} />
             </Col>
           ))
         }

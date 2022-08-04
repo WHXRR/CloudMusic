@@ -15,6 +15,9 @@ export const SongInfo = styled.div`
   .link {
     color: #0c73c2;
   }
+  .text-center {
+    text-align: center;
+  }
   @keyframes rote {
     0% {
       transform: rotate(0);

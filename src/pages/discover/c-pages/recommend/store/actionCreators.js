@@ -19,9 +19,9 @@ export const changeNewDiscAction = res => ({
   newDisc: [res.albums.slice(0, 5), res.albums.slice(5, 10)]
 })
 
-export const changeListAction = (type, res) => ({
-  type: actionTypes[`CHANGE_LISTS${type}`],
-  songs: res
+export const changeList1Action = list => ({
+  type: actionTypes.CHANGE_LISTS,
+  list
 })
 
 export const changeListLoadingAction = (res) => ({
@@ -61,28 +61,31 @@ export const getListsAction = () => {
       recommendService.getListDetails(allLists.list[0].id, 10),
       recommendService.getListDetails(allLists.list[1].id, 10),
       recommendService.getListDetails(allLists.list[2].id, 10),
-    ]).then(([list1, list2, list3]) => {
-      dispatch(changeListAction(1,
+      recommendService.getListDetails(allLists.list[3].id, 10),
+    ]).then(([list1, list2, list3, list4]) => {
+      const arr = [
         {
           name: allLists.list[0].name,
           img: allLists.list[0].coverImgUrl,
           songs: list1.songs
-        }
-      ))
-      dispatch(changeListAction(2,
+        },
         {
           name: allLists.list[1].name,
           img: allLists.list[1].coverImgUrl,
           songs: list2.songs
-        }
-      ))
-      dispatch(changeListAction(3,
+        },
         {
           name: allLists.list[2].name,
           img: allLists.list[2].coverImgUrl,
           songs: list3.songs
+        },
+        {
+          name: allLists.list[3].name,
+          img: allLists.list[3].coverImgUrl,
+          songs: list4.songs
         }
-      ))
+      ]
+      dispatch(changeList1Action(arr))
       dispatch(changeListLoadingAction(false))
     })
   }

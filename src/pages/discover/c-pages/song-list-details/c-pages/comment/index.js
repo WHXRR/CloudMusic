@@ -1,45 +1,44 @@
-import React, { memo, useState, useCallback, useEffect } from 'react'
+import React, { memo, useEffect, useState, useCallback } from 'react'
 
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { getHotCommentAction, getCommentAction } from '../../store/actionCreators'
+import { getSongListHotCommentAction, getSongListCommentAction } from '../../store/actionCreators'
 
 import Comment from '@/components/comment'
 
-const Comments = memo((props) => {
-
-  const dispatch = useDispatch()
+const SongListComment = memo((props) => {
   const { params } = props.match
+  const dispatch = useDispatch()
   const { hotComments, comments, total } = useSelector(
     state => ({
-      hotComments: state.getIn(['songDetail', 'hotComments']),
-      comments: state.getIn(['songDetail', 'comments']),
-      total: state.getIn(['songDetail', 'total']),
+      hotComments: state.getIn(['songListDetails', 'hotComments']),
+      comments: state.getIn(['songListDetails', 'comments']),
+      total: state.getIn(['songListDetails', 'total']),
     }),
     shallowEqual
   )
-  // 精彩评论
+
   useEffect(() => {
-    dispatch(getHotCommentAction(params.id))
-    dispatch(getCommentAction(params.id))
+    dispatch(getSongListHotCommentAction(params.id))
+    dispatch(getSongListCommentAction(params.id))
   }, [dispatch, params.id])
+
+  const handleLike = data => {
+    console.log(data);
+  }
+
+  const handleReplay = data => {
+    console.log({ data });
+  }
 
   const [current, setCurrentPage] = useState(1)
   const changePage = useCallback(
     (currentPage) => {
       setCurrentPage(currentPage)
       const targePageCount = (currentPage - 1) * 20
-      dispatch(getCommentAction(params.id, 20, targePageCount))
+      dispatch(getSongListCommentAction(params.id, 20, targePageCount))
     },
     [dispatch, params.id]
   )
-
-  const handleLike = item => {
-    console.log({ item });
-  }
-
-  const handleReplay = item => {
-    console.log({ item });
-  }
 
   return (
     <>
@@ -56,4 +55,4 @@ const Comments = memo((props) => {
   )
 })
 
-export default Comments
+export default SongListComment

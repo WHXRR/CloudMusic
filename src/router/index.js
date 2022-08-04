@@ -9,6 +9,7 @@ import AnchorStation from '@/pages/discover/c-pages/anchor-station'
 import Singer from '@/pages/discover/c-pages/singer'
 import NewDisc from '@/pages/discover/c-pages/new-disc'
 import SongDetail from '@/pages/discover/c-pages/song-detail'
+import SongListDetails from '@/pages/discover/c-pages/song-list-details'
 
 import Mine from '@/pages/mine'
 import Friends from '@/pages/friends'
@@ -57,6 +58,10 @@ const routes = [
       {
         path: '/discover/songdetail/:id',
         component: SongDetail
+      },
+      {
+        path: '/discover/songlistdetails/:id',
+        component: SongListDetails
       },
     ]
   },

@@ -4,26 +4,12 @@ export const Flex = styled.div`
   display: flex;
   align-items: center;
 `
-export const ListContent = styled.div`
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  grid-template-columns: repeat(3, 1fr);
-`
+
 export const ListItem = styled.div`
   .ant-card-body {
     padding: 0;
   }
-  .title1 {
-    background-color: #cf6094;
-  }
-  .title2 {
-    background-color: #55bbb9;
-  }
-  .title3 {
-    background-color: #64a3d9;
-  }
-  .title1, .title2, .title3 {
+  .title {
     padding: 20px 0;
     color: #fff;
     font-size: 20px;

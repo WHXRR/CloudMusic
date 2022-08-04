@@ -17,10 +17,11 @@ const SongDetail = memo((props) => {
 
   const dispatch = useDispatch()
   const { params } = props.match
-  const { detail, lyric } = useSelector(
+  const { detail, lyric, total } = useSelector(
     state => ({
       detail: state.getIn(['songDetail', 'detail']),
       lyric: state.getIn(['songDetail', 'lyric']),
+      total: state.getIn(['songDetail', 'total']),
     }),
     shallowEqual
   )
@@ -48,7 +49,7 @@ const SongDetail = memo((props) => {
           <Button type="primary" shape="round" ghost icon={<StarOutlined />}>收藏</Button>
           <Button type="primary" shape="round" ghost icon={<PaperClipOutlined />}>分享</Button>
           <Button type="primary" shape="round" ghost icon={<DownloadOutlined />}>下载</Button>
-          <Button type="primary" shape="round" ghost icon={<CommentOutlined />}>评论</Button>
+          <Button type="primary" shape="round" ghost icon={<CommentOutlined />}>评论({total})</Button>
         </div>
         <div className='lyric'>
           {
