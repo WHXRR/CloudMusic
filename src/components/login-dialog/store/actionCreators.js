@@ -32,6 +32,11 @@ export const changeUserProfile = (profile) => ({
   profile
 })
 
+export const changeDialogVisibleAction = (isShow) => ({
+  type: actionTypes.CHANGE_LOGIN_DIALOG_VISIBLE,
+  isShow
+})
+
 
 // --------------------------------------------------------network--------------------------------------------------------
 export const getLoginProfileInfo = (username, password, type) => {

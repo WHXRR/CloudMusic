@@ -5,6 +5,7 @@ import { reducer as songDetailReducer } from "../pages/discover/c-pages/song-det
 import { reducer as songListDetailReducer } from "../pages/discover/c-pages/song-list-details/store";
 import { reducer as loginReducer } from "../components/login-dialog/store";
 import { reducer as playerReducer } from "../components/player/store";
+import { reducer as albumDetailsReducer } from "../pages/discover/c-pages/album-details/store";
 
 const cReducer = combineReducers({
   recommend: recommendReducer,
@@ -12,6 +13,7 @@ const cReducer = combineReducers({
   songListDetails: songListDetailReducer,
   login: loginReducer,
   player: playerReducer,
+  albumDetails: albumDetailsReducer,
 })
 
 export default cReducer 

@@ -12,7 +12,7 @@ const SongDetail = memo((props) => {
 
   useEffect(() => {
     backTop()
-  }, [])
+  }, [props.match.params.id])
 
   return (
     <>

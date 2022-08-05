@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Title = styled.div`
-  padding: 30px 0;
+  padding-bottom: 30px;
   .top-title {
     display: flex;
     gap: 30px;
@@ -27,4 +27,12 @@ export const Title = styled.div`
     font-size: 14px;
     font-weight: 400;
   }
+`
+
+export const GreyBG = styled.div`
+  background-color: #f5f5f5;
+`
+
+export const Container = styled.div`
+  padding: 30px 0;
 `

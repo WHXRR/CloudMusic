@@ -5,7 +5,7 @@ import { getNewDiscAction } from '../../store/actionCreators'
 
 import SwiperSongStyle from '@/components/swiper-song-style';
 
-const NewDisc = memo(() => {
+const NewDisc = memo((props) => {
 
   const dispatch = useDispatch()
   const { newDisc } = useSelector(
@@ -18,8 +18,17 @@ const NewDisc = memo(() => {
     dispatch(getNewDiscAction())
   }, [dispatch])
 
+  const handleClick = (data) => {
+    props.history.push({
+      pathname: `/discover/albumdetails/${data.id}`,
+      state: {
+        singerId: data.artist.id
+      }
+    })
+  }
+
   return (
-    <SwiperSongStyle data={newDisc} />
+    <SwiperSongStyle data={newDisc} onClick={handleClick} />
   )
 })
 

@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react'
 
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { getSongListDetailsAction } from '../../store/actionCreators'
+import { getAlbumDetailsAction } from '../../store/actionCreators'
 
 
 import { Button, Table, Tag } from 'antd'
@@ -28,14 +28,6 @@ const SongList = memo((props) => {
   const dispatch = useDispatch()
   const { params } = props.match
 
-  const toLink = (data) => {
-    props.history.push({
-      pathname: `/discover/albumdetails/${data.al.id}`,
-      state: {
-        singerId: data.singer[0].id
-      }
-    })
-  }
   const columns = [
     {
       title: '#',
@@ -63,78 +55,63 @@ const SongList = memo((props) => {
     {
       title: '歌手',
       align: 'center',
-      dataIndex: 'singer',
-      key: 'singer',
-      render: (_, data) => (
+      dataIndex: 'singer_name',
+      key: 'singer_name',
+      render: (text) => (
         <>
           {
-            data.singer?.map((item, idx) => (
-              <Tag color={tagsColor[`color${idx + 1}`]} key={idx} style={{ margin: '2px' }}>{item.name}</Tag>
+            text?.map((item, idx) => (
+              <Tag color={tagsColor[`color${idx + 1}`]} key={idx} style={{ margin: '2px' }}>{item}</Tag>
             ))
           }
         </>
       ),
-    },
-    {
-      title: '所属专辑',
-      width: 200,
-      align: 'center',
-      dataIndex: 'al',
-      key: 'al',
-      render: (_, data) => <a onClick={() => toLink(data)}>{data.al.name}</a>,
-    },
+    }
   ]
 
-  const { detail } = useSelector(
+  const { detail: { album, songs }, total } = useSelector(
     state => ({
-      detail: state.getIn(['songListDetails', 'songListDetails']),
+      detail: state.getIn(['albumDetails', 'details']),
+      total: state.getIn(['albumDetails', 'total']),
     }),
     shallowEqual
   )
 
-  const createTime = new Date(detail.createTime)
+  const createTime = new Date(album?.publishTime)
 
   useEffect(() => {
-    dispatch(getSongListDetailsAction(params.id))
+    dispatch(getAlbumDetailsAction(params.id))
   }, [dispatch, params.id])
 
   return (
     <SongListDetailStyle>
-      <img className='song-img' src={detail.coverImgUrl} alt={detail.name} />
-      <div className='song-name'>{detail.name}</div>
+      <img className='song-img' src={album?.picUrl} alt={album?.name} />
+      <div className='song-name'>{album?.name}</div>
       <div className='other-info text-center'>
-        <span className='link'>{detail.creator?.nickname}</span>
-        <div className='grey'>{`${createTime.getFullYear()}-${+createTime.getMonth() + 1}-${createTime.getDate()}`} 创建</div>
+        <span>歌手：{album?.artists.map((item, idx) => <Tag key={item.id} color={tagsColor[`color${idx + 1}`]}>{item.name}</Tag>)}</span>
+        <div className='grey'>发行时间：{`${createTime.getFullYear()}-${+createTime.getMonth() + 1}-${createTime.getDate()}`}</div>
       </div>
       <div className='btns'>
         <Button type="primary" shape="round" ghost icon={<PlayCircleOutlined />}>播放</Button>
         <Button type="primary" shape="round" ghost icon={<StarOutlined />}>收藏</Button>
         <Button type="primary" shape="round" ghost icon={<PaperClipOutlined />}>分享</Button>
         <Button type="primary" shape="round" ghost icon={<DownloadOutlined />}>下载</Button>
-        <Button type="primary" shape="round" ghost icon={<CommentOutlined />}>评论({detail.commentCount})</Button>
+        <Button type="primary" shape="round" ghost icon={<CommentOutlined />}>评论({total})</Button>
       </div>
-      <div className='text-left'>
-        <span className='grey'>标签：
-          {
-            detail.tags?.map((item, idx) => (
-              <Tag key={idx} color={tagsColor[`color${idx + 1}`]}>{item}</Tag>
-            ))
-          }
-        </span>
-      </div>
-      <div className='grey description'>
-        介绍：{detail.description}
+
+      <div className='grey description' style={{whiteSpace: 'pre-line'}}>
+        <div className='text-bold'>专辑介绍</div>
+        <div dangerouslySetInnerHTML={{ __html: album?.description }}></div>
       </div>
       <div className='table-top'>
         <div className='flex'>
           <div className='title'>歌曲列表</div>
-          <div>{detail.tracks?.length}首歌</div>
+          <div>{songs?.length}首歌</div>
         </div>
-        <div>播放：<strong className='red'>{detail?.playCount}</strong>次</div>
       </div>
       <Table
         columns={columns}
-        dataSource={detail?.tracks}
+        dataSource={songs}
         pagination={false}
         size='small'
         scroll={{ y: 300 }}

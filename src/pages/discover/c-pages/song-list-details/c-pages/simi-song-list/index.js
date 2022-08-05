@@ -24,7 +24,7 @@ const SimiSongList = memo((props) => {
   }, [dispatch, params.id])
 
   const handleClick = item => {
-    props.history.push(`/discover/songlistdetail/${item.id}`)
+    props.history.push(`/discover/songlistdetails/${item.id}`)
   }
 
   return (

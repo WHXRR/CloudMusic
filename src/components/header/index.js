@@ -1,7 +1,8 @@
 import React, { memo, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { shallowEqual, useSelector } from 'react-redux'
+import { shallowEqual, useSelector, useDispatch } from 'react-redux'
+import { changeDialogVisibleAction } from '../login-dialog/store/actionCreators'
 
 import { SmileTwoTone, SearchOutlined, UserOutlined, VerticalAlignBottomOutlined, HighlightOutlined, MehTwoTone } from '@ant-design/icons';
 import { Dropdown, Input, Menu, Drawer } from 'antd';
@@ -16,6 +17,7 @@ import {
 
 const Header = memo(() => {
 
+  const dispatch = useDispatch()
   // 个人菜单
   const otherMenu = [
     {
@@ -40,19 +42,10 @@ const Header = memo(() => {
   ]
   const onClick = ({ key }) => {
     if (key === '1') {
-      changeVisible(true)
+      dispatch(changeDialogVisibleAction(true))
     }
   }
   const [drawerVisible, changeDrawerVisible] = useState(false)
-
-  // 登录弹窗
-  const [visible, changeVisible] = useState(false)
-  const handleOk = () => {
-    changeVisible(false)
-  }
-  const handleCancel = () => {
-    changeVisible(false)
-  }
 
   const { token } = useSelector(
     state => ({
@@ -108,7 +101,7 @@ const Header = memo(() => {
           items={otherMenu}
         />
       </Drawer>
-      <LoginDialog visible={visible} handleOk={handleOk} handleCancel={handleCancel} />
+      <LoginDialog />
     </HeaderStyle>
   )
 })

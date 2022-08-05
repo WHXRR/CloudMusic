@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const HeaderStyle = styled.div`
  padding-bottom: 62px;
   .shadow {
-    background-color: #000;
+    background-color: #272727;
     a {
       color: #fff !important;
     }

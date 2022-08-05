@@ -12,6 +12,9 @@ const Arrow = ({ currentSlide, direction, slideCount, ...carouselProps }) =>
   )
 
 const SwiperSongStyle = memo((props) => {
+
+  const { onClick } = props
+
   return (
     <DiscContent>
       <Carousel
@@ -25,7 +28,7 @@ const SwiperSongStyle = memo((props) => {
             <DiscSwiper key={idx}>
               {
                 Array.isArray(arr) ? arr.map(item => (
-                  <DiscItem key={item.id}>
+                  <DiscItem key={item.id} onClick={() => onClick(item)}>
                     <div className='img'>
                       <img src={item.picUrl} alt={item.name} />
                     </div>

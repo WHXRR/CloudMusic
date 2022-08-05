@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const SongInfo = styled.div`
   position: relative;
   overflow: hidden;
-  height: calc(100vh - 62px);
+  min-height: calc(100vh - 62px);
   padding: 20px;
   display: flex;
   gap: 10px;

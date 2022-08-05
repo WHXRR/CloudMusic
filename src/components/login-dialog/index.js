@@ -1,5 +1,8 @@
 import React, { memo, useState } from 'react'
 
+import { shallowEqual, useSelector, useDispatch } from 'react-redux'
+import { changeDialogVisibleAction } from './store/actionCreators'
+
 import { Modal } from 'antd';
 
 import { LoginDialogStyle } from './style'
@@ -16,16 +19,29 @@ export const REGISTERACCOUNT = 'REGISTERACCOUNT'
 
 const LoginDialog = memo((props) => {
 
-  const { visible, handleOk, handleCancel } = props
+  const dispatch = useDispatch()
+  const { isShow } = useSelector(
+    state => ({
+      isShow: state.getIn(['login', 'isShow']),
+    }),
+    shallowEqual
+  )
 
   const [loginType, changeLoginType] = useState(LOGINBYPHONE)
   const changeLogin = (type) => {
     changeLoginType(type)
   }
 
+  const handleOk = () => {
+    dispatch(changeDialogVisibleAction(false))
+  }
+  const handleCancel = () => {
+    dispatch(changeDialogVisibleAction(false))
+  }
+
   return (
     <Modal
-      visible={visible}
+      visible={isShow}
       closable={false}
       footer={null}
       onOk={handleOk}

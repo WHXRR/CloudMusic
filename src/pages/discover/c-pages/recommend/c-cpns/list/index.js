@@ -2,7 +2,7 @@ import React, { memo, useEffect } from 'react'
 
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getListsAction } from '../../store/actionCreators'
-import { changeShowFlagAction } from '@/components/player/store/actionCreators'
+import { changeShowFlagAction, getCurrentSongAction } from '@/components/player/store/actionCreators'
 
 import { Card, Col, Row } from 'antd';
 import { FireTwoTone, PlayCircleFilled, RightOutlined } from '@ant-design/icons';
@@ -36,16 +36,21 @@ const Recommend = memo((props) => {
     props.history.push(`/discover/songdetail/${id}`)
   }
 
+  const clickPlayBtn = data => {
+    dispatch(changeShowFlagAction(true))
+    dispatch(getCurrentSongAction(data.id))
+  }
+
   return (
     <Row gutter={[20, 20]} justify="space-around">
       {
         list.map((item, index) => (
-          <Col key={index} sm={9} md={4}>
+          <Col key={index} sm={12} md={6}>
             <ListItem>
               <Card
                 hoverable
                 loading={listLoading}
-                style={{ width: 250, marginTop: 16 }}
+                style={{ width: 250, margin: '16px auto' }}
                 actions={[
                   <div>
                     查看更多
@@ -65,7 +70,7 @@ const Recommend = memo((props) => {
                           <span className={'num ' + (idx < 3 ? 'top-few' : '')}>{idx + 1}</span>
                           <span className='song-name' title={ele.name}>{ele.name}</span>
                         </Flex>
-                        <PlayCircleFilled className='icon' onClick={() => dispatch(changeShowFlagAction(true))} />
+                        <PlayCircleFilled className='icon' onClick={() => clickPlayBtn(ele)} />
                       </div>
                     ))
                   }

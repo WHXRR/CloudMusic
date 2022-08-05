@@ -46,8 +46,8 @@ export const getSongListDetailsAction = (id) => {
         index: idx + 1,
         name: item.name,
         dt: item.dt,
-        singer_name: item.ar?.map(ele => ele.name),
-        al_name: item.al.name,
+        singer: item.ar,
+        al: item.al,
         id: item.id
       }))
     }
