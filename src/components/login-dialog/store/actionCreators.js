@@ -37,10 +37,16 @@ export const changeDialogVisibleAction = (isShow) => ({
   isShow
 })
 
+export const changeLoadingAction = (loading) => ({
+  type: actionTypes.CHANGE_LOADING,
+  loading
+})
+
 
 // --------------------------------------------------------network--------------------------------------------------------
 export const getLoginProfileInfo = (username, password, type) => {
   return async dispatch => {
+    dispatch(changeLoadingAction(true))
     let res = {}
     if (type === LOGINBYPHONE) {
       res = await loginService.gotoPhoneLogin(username, null, md5(password))
@@ -54,9 +60,30 @@ export const getLoginProfileInfo = (username, password, type) => {
     } else {
       message.success('登录成功')
       document.cookie = res.cookie
+      localStorage.setItem('token', res.token)
+      localStorage.setItem('profile', JSON.stringify(res.profile))
       dispatch(changeUserLoginToken(res.token))
       dispatch(changeUserLoginCookie(res.cookie))
       dispatch(changeUserProfile(res.profile))
+      dispatch(changeDialogVisibleAction(false))
     }
+    dispatch(changeLoadingAction(false))
+  }
+}
+
+export const getLoginout = () => {
+  return dispatch => {
+    loginService.logout().then(res => {
+      if (res.code === 200) {
+        message.success('注销成功')
+        localStorage.removeItem('token')
+        localStorage.removeItem('profile')
+        dispatch(changeUserLoginToken(''))
+        dispatch(changeUserLoginCookie(''))
+        dispatch(changeUserProfile({}))
+      } else {
+        message.error(res.message)
+      }
+    })
   }
 }

@@ -52,12 +52,11 @@ export const getAlbumDetailsAction = (id) => {
 export const getAlbumHotCommentAction = (id) => {
   return dispatch => {
     getHotComment(id, 3).then(res => {
-      const comments = res.hotComments.map(item => {
+      const comments = res.hotComments.map((item, index) => {
         return {
-          content: item.content,
+          ...item,
           ...item.user,
-          timeStr: item.timeStr,
-          likedCount: item.likedCount,
+          index
         }
       })
       dispatch(changeAlbumHotCommentAction(comments))
@@ -68,13 +67,11 @@ export const getAlbumHotCommentAction = (id) => {
 export const getAlbumCommentAction = (id, limit, offset) => {
   return dispatch => {
     albumDetailsService.getAlbumDetailsComment(id, limit, offset).then(res => {
-      const newComments = res.comments.map(item => {
+      const newComments = res.comments.map((item, index) => {
         return {
-          content: item.content,
+          ...item,
           ...item.user,
-          timeStr: item.timeStr,
-          likedCount: item.likedCount,
-          total: res.total
+          index
         }
       })
       dispatch(changeAlbumCommentAction(newComments))

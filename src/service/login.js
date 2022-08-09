@@ -51,3 +51,9 @@ export function sendRegister(captcha, phone, password, nickname) {
     },
   })
 }
+
+export function logout() {
+  return request({
+    url: '/logout',
+  })
+}

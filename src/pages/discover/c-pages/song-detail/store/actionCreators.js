@@ -12,27 +12,27 @@ export const changeSongDetailAction = res => ({
 })
 
 // 改变歌词Action
-const changeLyricAction = (lyric) => ({
+export const changeLyricAction = (lyric) => ({
   type: actionTypes.CHANGE_LYRIC_LIST,
   lyric,
 })
 
-const changeHotCommentAction = (comment) => ({
+export const changeHotCommentAction = (comment) => ({
   type: actionTypes.CHANGE_HOT_COMMENT,
   comment,
 })
 
-const changeCommentAction = (comment) => ({
+export const changeCommentAction = (comment) => ({
   type: actionTypes.CHANGE_COMMENT,
   comment,
 })
 
-const changeTotalCommentAction = (total) => ({
+export const changeTotalCommentAction = (total) => ({
   type: actionTypes.CHANGE_TOTAL_COMMENT,
   total,
 })
 
-const changeSimiSongAction = (song) => ({
+export const changeSimiSongAction = (song) => ({
   type: actionTypes.CHANGE_SIMI_SONG,
   song,
 })
@@ -60,12 +60,11 @@ export const getLyricAction = (id) => {
 export const getHotCommentAction = (id) => {
   return (dispatch) => {
     songService.getHotComment(id).then((res) => {
-      const comments = res.hotComments.map(item => {
+      const comments = res.hotComments.map((item, index) => {
         return {
-          content: item.content,
+          ...item,
           ...item.user,
-          timeStr: item.timeStr,
-          likedCount: item.likedCount,
+          index
         }
       })
       dispatch(changeHotCommentAction(comments))
@@ -76,12 +75,11 @@ export const getHotCommentAction = (id) => {
 export const getCommentAction = (id, limit, offset) => {
   return (dispatch) => {
     songService.getSongComment(id, limit, offset).then((res) => {
-      const newComments = res.comments.map(item => {
+      const newComments = res.comments.map((item, index) => {
         return {
-          content: item.content,
+          ...item,
           ...item.user,
-          timeStr: item.timeStr,
-          likedCount: item.likedCount,
+          index
         }
       })
       dispatch(changeCommentAction(newComments))

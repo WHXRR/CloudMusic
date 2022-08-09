@@ -17,7 +17,7 @@ const SongDetail = memo((props) => {
   if (!singerId) {
     if (props.location.state) {
       changeSingerId(props.location.state.singerId)
-      sessionStorage.setItem('singerId', singerId);
+      sessionStorage.setItem('singerId', props.location.state.singerId);
     } else {
       const id = sessionStorage.getItem('singerId')
       changeSingerId(id)

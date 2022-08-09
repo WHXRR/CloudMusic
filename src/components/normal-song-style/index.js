@@ -26,8 +26,8 @@ const NormalSongStyle = memo((props) => {
           <PlayCircleOutlined className='icon' />
         </div>
       </div>
-      <div className='hot-title'>{props.name}</div>
-      <div className='singer-name'>{props.singerName}</div>
+      <div className='hot-title' title={props.name}>{props.name}</div>
+      <div className='singer-name' title={props.singerName}>{props.singerName}</div>
     </HotItem>
   )
 })

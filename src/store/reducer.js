@@ -6,10 +6,12 @@ import { reducer as songListDetailReducer } from "../pages/discover/c-pages/song
 import { reducer as loginReducer } from "../components/login-dialog/store";
 import { reducer as playerReducer } from "../components/player/store";
 import { reducer as albumDetailsReducer } from "../pages/discover/c-pages/album-details/store";
+import { reducer as songListReducer } from "../pages/discover/c-pages/song-sheet/store";
 
 const cReducer = combineReducers({
   recommend: recommendReducer,
   songDetail: songDetailReducer,
+  songList: songListReducer,
   songListDetails: songListDetailReducer,
   login: loginReducer,
   player: playerReducer,

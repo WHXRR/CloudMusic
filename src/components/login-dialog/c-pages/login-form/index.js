@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-import { useDispatch } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getLoginProfileInfo } from '../../store/actionCreators'
 
 import { Button, Form, Input, Divider } from 'antd';
@@ -17,6 +17,13 @@ const LoginDialog = memo((props) => {
   const { loginType, changeLoginType } = props
 
   const dispatch = useDispatch()
+  const { globalBtnLoading } = useSelector(
+    state => ({
+      globalBtnLoading: state.getIn(['login', 'globalBtnLoading']),
+    }),
+    shallowEqual
+  )
+
   const onFinish = ({ username, password }) => {
     dispatch(getLoginProfileInfo(username, password, loginType))
   }
@@ -34,7 +41,7 @@ const LoginDialog = memo((props) => {
             <Form.Item
               label="手机号"
               name="username"
-              rules={[{ required: true, message: '请输入手机号', type: 'number' }]}
+              rules={[{ required: true, message: '请输入手机号' }]}
               style={{ marginBottom: '10px' }}
             >
               <Input />
@@ -78,7 +85,7 @@ const LoginDialog = memo((props) => {
         >
           <Input.Password />
         </Form.Item>
-        <Button shape='round' type="primary" htmlType="submit" className='login-btn'>
+        <Button shape='round' type="primary" htmlType="submit" className='login-btn' loading={globalBtnLoading}>
           登录
         </Button>
         <Button shape='round' htmlType="submit" className='login-btn' onClick={() => changeLoginType(REGISTERACCOUNT)}>立即注册</Button>

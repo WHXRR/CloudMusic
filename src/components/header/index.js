@@ -2,10 +2,24 @@ import React, { memo, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { shallowEqual, useSelector, useDispatch } from 'react-redux'
-import { changeDialogVisibleAction } from '../login-dialog/store/actionCreators'
+import { changeDialogVisibleAction, getLoginout } from '../login-dialog/store/actionCreators'
 
-import { SmileTwoTone, SearchOutlined, UserOutlined, VerticalAlignBottomOutlined, HighlightOutlined, MehTwoTone } from '@ant-design/icons';
-import { Dropdown, Input, Menu, Drawer } from 'antd';
+import {
+  PoweroffOutlined,
+  SearchOutlined,
+  UserOutlined,
+  VerticalAlignBottomOutlined,
+  HighlightOutlined,
+  ExclamationCircleOutlined
+} from '@ant-design/icons';
+import {
+  Dropdown,
+  Input,
+  Menu,
+  Drawer,
+  Avatar,
+  Modal
+} from 'antd';
 
 import { menu } from '@/common/header_menu'
 import LoginDialog from '../login-dialog';
@@ -15,16 +29,34 @@ import {
   HeaderStyle
 } from './style'
 
+const { confirm } = Modal;
+
 const Header = memo(() => {
 
   const dispatch = useDispatch()
+  const { token, profile } = useSelector(
+    state => ({
+      token: state.getIn(['login', 'token']),
+      profile: state.getIn(['login', 'profile']),
+    }),
+    shallowEqual
+  )
+
   // 个人菜单
   const otherMenu = [
-    {
-      key: '1',
-      label: '登录',
-      icon: <UserOutlined />,
-    },
+    token ? (
+      {
+        key: '4',
+        label: '注销',
+        icon: <PoweroffOutlined />,
+      }
+    ) : (
+      {
+        key: '1',
+        label: '登录',
+        icon: <UserOutlined />,
+      }
+    ),
     {
       key: '2',
       label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
@@ -41,18 +73,26 @@ const Header = memo(() => {
     }
   ]
   const onClick = ({ key }) => {
-    if (key === '1') {
-      dispatch(changeDialogVisibleAction(true))
+    switch (key) {
+      case '1':
+        dispatch(changeDialogVisibleAction(true))
+        break;
+      case '4':
+        confirm({
+          title: '您确定要注销登录吗?',
+          icon: <ExclamationCircleOutlined />,
+          okText: '确定',
+          cancelText: '取消',
+          onOk() {
+            dispatch(getLoginout())
+          }
+        });
+        break;
+      default:
+        break;
     }
   }
   const [drawerVisible, changeDrawerVisible] = useState(false)
-
-  const { token } = useSelector(
-    state => ({
-      token: state.getIn(['login', 'token']),
-    }),
-    shallowEqual
-  )
 
   let [height, changeHeight] = useState(0)
   const bindHandleScroll = (event) => {
@@ -69,9 +109,9 @@ const Header = memo(() => {
         {
           token
             ?
-            <SmileTwoTone className='logo' twoToneColor='#00badb' onClick={() => changeDrawerVisible(true)} />
+            <Avatar className='pointer' src={profile.avatarUrl} onClick={() => changeDrawerVisible(true)} />
             :
-            <MehTwoTone className='logo' twoToneColor='#00badb' onClick={() => changeDrawerVisible(true)} />
+            <Avatar className='pointer' style={{ backgroundColor: '#00badb' }} icon={<UserOutlined />} onClick={() => changeDrawerVisible(true)} />
         }
         <div className='center'>
           <Dropdown overlay={menu}>

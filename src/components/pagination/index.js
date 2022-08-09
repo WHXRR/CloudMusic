@@ -5,14 +5,15 @@ import { PaginationStyle } from './style'
 
 const Cpagination = memo((props) => {
 
-  const { current, total, handleChange } = props
+  const { current, total, handleChange, pageSize = 20, size = 'small' } = props
 
   return (
     <PaginationStyle>
       <Pagination
-        size="small"
+        size={size}
         current={current}
         total={total}
+        pageSize={pageSize}
         showSizeChanger={false}
         onChange={handleChange}
       />

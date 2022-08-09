@@ -51,3 +51,44 @@ export function getSimiSong(id) {
     },
   })
 }
+
+// 点赞
+// 0: 歌曲
+// 1: mv
+// 2: 歌单
+// 3: 专辑
+// 4: 电台
+// 5: 视频
+// 6: 动态
+export function commentLike(id, cid, t, type = 0) {
+  return request({
+    url: '/comment/like',
+    params: {
+      id,
+      cid,
+      t,
+      type
+    },
+  })
+}
+
+// 评论
+// 0: 歌曲
+// 1: mv
+// 2: 歌单
+// 3: 专辑
+// 4: 电台
+// 5: 视频
+// 6: 动态
+export function handleComment(id, content, t = 1, type = 0, commentId) {
+  return request({
+    url: '/comment',
+    params: {
+      id,
+      content,
+      t,
+      type,
+      commentId
+    },
+  })
+}

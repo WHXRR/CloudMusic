@@ -47,9 +47,15 @@ export const HotItem = styled.div`
     color: #222;
     font-style: italic;
     transition: color .3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .singer-name {
     color: #999;
     font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `

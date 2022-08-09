@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const CommentsStyle = styled.div`
   .like {
-    color: red;
+    color: #c20c0c;
   }
   .pointer {
     cursor: pointer;

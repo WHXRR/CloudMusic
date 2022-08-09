@@ -1,9 +1,13 @@
 import React, { memo, useEffect, useState, useCallback } from 'react'
 
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { getAlbumHotCommentAction, getAlbumCommentAction } from '../../store/actionCreators'
+import { getAlbumHotCommentAction, getAlbumCommentAction, changeAlbumHotCommentAction, changeAlbumCommentAction } from '../../store/actionCreators'
 
 import Comment from '@/components/comment'
+
+import { message } from 'antd'
+
+import { commentLike, handleComment } from '@/service/songDetail'
 
 const SongListComment = memo((props) => {
   const { params } = props.match
@@ -22,9 +26,22 @@ const SongListComment = memo((props) => {
     dispatch(getAlbumCommentAction(params.id))
   }, [dispatch, params.id])
 
-  const handleLike = data => {
-    console.log(data);
-  }
+  const handleLike = useCallback(
+    (item, type) => {
+      commentLike(params.id, item.commentId, +!item.liked, 3).then(() => {
+        let newComments = []
+        if (type === 'hot') {
+          newComments = [...hotComments]
+        } else {
+          newComments = [...comments]
+        }
+        !item.liked ? newComments[item.index].likedCount += 1 : newComments[item.index].likedCount -= 1
+        newComments[item.index].liked = !item.liked
+        type === 'hot' ? dispatch(changeAlbumHotCommentAction(newComments)) : dispatch(changeAlbumCommentAction(newComments))
+      })
+    },
+    [params.id, dispatch, hotComments, comments]
+  )
 
   const handleReplay = data => {
     console.log({ data });
@@ -39,6 +56,24 @@ const SongListComment = memo((props) => {
     },
     [dispatch, params.id]
   )
+  
+  const [commentLoading, changeLoading] = useState(false)
+  const handleSubmit = useCallback(
+    content => {
+      changeLoading(true)
+      handleComment(params.id, content, 1, 3).then(res => {
+        if (res.code === 200) {
+          message.success('评论成功').then(() => {
+            dispatch(getAlbumCommentAction(params.id))
+          })
+        } else {
+          message.error('评论失败')
+        }
+        changeLoading(false)
+      })
+    },
+    [params.id, dispatch]
+  )
 
   return (
     <>
@@ -50,6 +85,8 @@ const SongListComment = memo((props) => {
         changePage={changePage}
         current={current}
         commentsTotal={total}
+        handleSubmit={handleSubmit}
+        commentLoading={commentLoading}
       />
     </>
   )

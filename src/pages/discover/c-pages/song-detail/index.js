@@ -17,11 +17,12 @@ const SongDetail = memo((props) => {
 
   const dispatch = useDispatch()
   const { params } = props.match
-  const { detail, lyric, total } = useSelector(
+  const { detail, lyric, total, globalBtnLoading } = useSelector(
     state => ({
       detail: state.getIn(['songDetail', 'detail']),
       lyric: state.getIn(['songDetail', 'lyric']),
       total: state.getIn(['songDetail', 'total']),
+      globalBtnLoading: state.getIn(['login', 'globalBtnLoading']),
     }),
     shallowEqual
   )
@@ -45,7 +46,7 @@ const SongDetail = memo((props) => {
           <span className='link'>{detail[0]?.al?.name}</span>
         </div>
         <div className='btns'>
-          <Button type="primary" shape="round" ghost icon={<PlayCircleOutlined />}>播放</Button>
+          <Button type="primary" shape="round" ghost icon={<PlayCircleOutlined />} loading={globalBtnLoading}>播放</Button>
           <Button type="primary" shape="round" ghost icon={<StarOutlined />}>收藏</Button>
           <Button type="primary" shape="round" ghost icon={<PaperClipOutlined />}>分享</Button>
           <Button type="primary" shape="round" ghost icon={<DownloadOutlined />}>下载</Button>

@@ -2,6 +2,9 @@ import styled from 'styled-components'
 
 export const HeaderStyle = styled.div`
  padding-bottom: 62px;
+  .pointer {
+   cursor: pointer;
+  }
   .shadow {
     background-color: #272727;
     a {

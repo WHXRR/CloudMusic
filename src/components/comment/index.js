@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 
 import Cpagination from '@/components/pagination'
 
@@ -10,54 +10,85 @@ import { FireFilled } from '@ant-design/icons';
 
 import { CommentsStyle } from './style'
 
+const { TextArea } = Input;
+const Editor = ({ onChange, onSubmit, submitting, value }) => (
+  <>
+    <Form.Item>
+      <TextArea placeholder='说点什么...' rows={4} onChange={onChange} value={value} />
+    </Form.Item>
+    <Form.Item>
+      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+        评论
+      </Button>
+    </Form.Item>
+  </>
+);
+
 const Comments = memo((props) => {
   const dispatch = useDispatch()
 
-  const { hotComment, newComment, current, commentsTotal, changePage, handleLike, handleReplay } = props
+  const {
+    hotComment,
+    newComment,
+    current,
+    commentsTotal,
+    changePage,
+    handleLike,
+    handleReplay,
+    handleSubmit,
+    commentLoading
+  } = props
 
-  const { TextArea } = Input;
-  const Editor = ({ onChange, onSubmit, submitting, value }) => (
-    <>
-      <Form.Item>
-        <TextArea placeholder='说点什么...' rows={4} onChange={onChange} value={value} />
-      </Form.Item>
-      <Form.Item>
-        <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="link">
-          评论
-        </Button>
-      </Form.Item>
-    </>
-  );
-
-  const { token } = useSelector(
+  const { token, profile } = useSelector(
     state => ({
       token: state.getIn(['login', 'token']),
+      profile: state.getIn(['login', 'profile']),
     }),
     shallowEqual
   )
   const clickReplay = data => {
     if (!token) {
       message.warning('请先登录！')
-      dispatch(changeDialogVisibleAction(true))
-      return
+      return dispatch(changeDialogVisibleAction(true))
     }
-    handleReplay({data})
+    handleReplay(data)
   }
-  const clickLike = data => {
+  const clickLike = (data, type) => {
     if (!token) {
       message.warning('请先登录！')
-      dispatch(changeDialogVisibleAction(true))
-      return
+      return dispatch(changeDialogVisibleAction(true))
     }
-    handleLike({data})
+    handleLike(data, type)
+  }
+
+  const [value, changeValue] = useState('')
+  const onChange = (e) => {
+    changeValue(e.target.value)
+  }
+  const onSubmit = () => {
+    if (!token) {
+      message.warning('请先登录！')
+      return dispatch(changeDialogVisibleAction(true))
+    }
+    if (!value) return
+    handleSubmit(value)
   }
 
   return (
     <CommentsStyle>
       <Comment
-        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="" />}
+        avatar={
+          <Avatar
+            src={profile.avatarUrl || "https://joeschmoe.io/api/v1/random"}
+            alt={profile.nickname}
+          />}
         content={
-          <Editor />
+          <Editor
+            onSubmit={onSubmit}
+            value={value}
+            onChange={onChange}
+            submitting={commentLoading}
+          />
         }
       />
       <List
@@ -72,7 +103,7 @@ const Comments = memo((props) => {
                 [
                   <div className='flex'>
                     <span className='pointer' onClick={() => clickReplay(item)}>回复</span>
-                    <div onClick={() => clickLike(item)} className='pointer'>
+                    <div onClick={() => clickLike(item, 'hot')} className={'pointer ' + (item.liked ? 'like' : '')}>
                       <FireFilled />
                       （{item.likedCount}）
                     </div>
@@ -98,8 +129,8 @@ const Comments = memo((props) => {
               actions={
                 [
                   <div className='flex'>
-                    <span onClick={() => clickReplay(item)}>回复</span>
-                    <div onClick={() => clickLike(item)}>
+                    <span className='pointer' onClick={() => clickReplay(item)}>回复</span>
+                    <div onClick={() => clickLike(item, 'new')} className={'pointer ' + (item.liked ? 'like' : '')}>
                       <FireFilled className='pointer' />
                       （{item.likedCount}）
                     </div>

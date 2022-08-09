@@ -2,10 +2,11 @@ import { Map } from 'immutable'
 import * as actionTypes from './constants'
 
 const defaultState = Map({
-  profile: {},
-  token: '',
+  profile: JSON.parse(localStorage.getItem('profile')) || {},
+  token: localStorage.getItem('token') || '',
   cookie: '',
-  isShow: false
+  isShow: false,
+  globalBtnLoading: false
 })
 
 function reducer(state = defaultState, action) {
@@ -18,6 +19,8 @@ function reducer(state = defaultState, action) {
       return state.set('cookie', action.cookie)
     case actionTypes.CHANGE_LOGIN_DIALOG_VISIBLE:
       return state.set('isShow', action.isShow)
+    case actionTypes.CHANGE_LOADING:
+      return state.set('globalBtnLoading', action.loading)
     default:
       return state
   }

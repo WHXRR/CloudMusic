@@ -58,12 +58,11 @@ export const getSongListDetailsAction = (id) => {
 export const getSongListHotCommentAction = (id) => {
   return dispatch => {
     getHotComment(id, 2).then(res => {
-      const comments = res.hotComments.map(item => {
+      const comments = res.hotComments.map((item, index) => {
         return {
-          content: item.content,
+          ...item,
           ...item.user,
-          timeStr: item.timeStr,
-          likedCount: item.likedCount,
+          index
         }
       })
       dispatch(changeSongListHotCommentAction(comments))
@@ -74,13 +73,11 @@ export const getSongListHotCommentAction = (id) => {
 export const getSongListCommentAction = (id, limit, offset) => {
   return dispatch => {
     songListService.getSongListComment(id, limit, offset).then(res => {
-      const newComments = res.comments.map(item => {
+      const newComments = res.comments.map((item, index) => {
         return {
-          content: item.content,
+          ...item,
           ...item.user,
-          timeStr: item.timeStr,
-          likedCount: item.likedCount,
-          total: res.total
+          index
         }
       })
       dispatch(changeSongListCommentAction(newComments))

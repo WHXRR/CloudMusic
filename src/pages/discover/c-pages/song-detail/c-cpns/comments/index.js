@@ -1,9 +1,13 @@
 import React, { memo, useState, useCallback, useEffect } from 'react'
 
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { getHotCommentAction, getCommentAction } from '../../store/actionCreators'
+import { getHotCommentAction, getCommentAction, changeHotCommentAction, changeCommentAction } from '../../store/actionCreators'
 
 import Comment from '@/components/comment'
+
+import { message } from 'antd'
+
+import { commentLike, handleComment } from '@/service/songDetail'
 
 const Comments = memo((props) => {
 
@@ -33,13 +37,44 @@ const Comments = memo((props) => {
     [dispatch, params.id]
   )
 
-  const handleLike = item => {
-    console.log({ item });
-  }
+  const handleLike = useCallback(
+    (item, type) => {
+      commentLike(params.id, item.commentId, +!item.liked).then(() => {
+        let newComments = []
+        if (type === 'hot') {
+          newComments = [...hotComments]
+        } else {
+          newComments = [...comments]
+        }
+        !item.liked ? newComments[item.index].likedCount += 1 : newComments[item.index].likedCount -= 1
+        newComments[item.index].liked = !item.liked
+        type === 'hot' ? dispatch(changeHotCommentAction(newComments)) : dispatch(changeCommentAction(newComments))
+      })
+    },
+    [params.id, dispatch, hotComments, comments]
+  )
 
   const handleReplay = item => {
     console.log({ item });
   }
+
+  const [commentLoading, changeLoading] = useState(false)
+  const handleSubmit = useCallback(
+    content => {
+      changeLoading(true)
+      handleComment(params.id, content, 1).then(res => {
+        if (res.code === 200) {
+          message.success('评论成功').then(() => {
+            dispatch(getCommentAction(params.id))
+          })
+        } else {
+          message.error('评论失败')
+        }
+        changeLoading(false)
+      })
+    },
+    [params.id, dispatch]
+  )
 
   return (
     <>
@@ -51,6 +86,8 @@ const Comments = memo((props) => {
         changePage={changePage}
         current={current}
         commentsTotal={total}
+        handleSubmit={handleSubmit}
+        commentLoading={commentLoading}
       />
     </>
   )
