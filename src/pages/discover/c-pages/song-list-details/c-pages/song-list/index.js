@@ -81,7 +81,7 @@ const SongList = memo((props) => {
       align: 'center',
       dataIndex: 'al',
       key: 'al',
-      render: (_, data) => <a onClick={() => toLink(data)}>{data.al.name}</a>,
+      render: (_, data) => <a href='javascript;:' onClick={(e) => { e.preventDefault(); toLink(data) }}>{data.al.name}</a>,
     },
   ]
 

@@ -13,7 +13,14 @@ import {
   CateItemStyle
 } from './style'
 
+import { backTop } from '@/utils/back-top'
+
 const SongSheet = memo((props) => {
+  
+  useEffect(() => {
+    backTop()
+  }, [props.match.params.id])
+
   const dispatch = useDispatch()
   const { catList, songList, total } = useSelector(
     state => ({

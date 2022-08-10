@@ -1,7 +1,12 @@
 import React, { useRef, memo, useState, useEffect, useCallback } from 'react'
 
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { changeShowFlagAction, changeFroceShowFlagAction, changePlayListAction } from './store/actionCreators'
+import {
+  changeShowFlagAction,
+  changeFroceShowFlagAction,
+  changePlayListAction,
+  getCurrentSongAction
+} from './store/actionCreators'
 
 import {
   LockOutlined,
@@ -15,7 +20,7 @@ import {
   CaretRightOutlined,
   ClearOutlined
 } from '@ant-design/icons'
-import { Slider, Dropdown } from 'antd'
+import { Slider, Dropdown, Empty } from 'antd'
 
 import Music from '@/assets/img/music-icon.png'
 import { PlayerStyle, PlayListStyle } from './style'
@@ -38,8 +43,22 @@ const Player = memo(() => {
 
   const [play, changePlay] = useState(false)
 
-  const clickPlayer = () => {
-    console.log(1);
+  const clickPlayer = (type) => {
+    if (playList.length === 1 || !playList.length) return
+    const index = playList.findIndex(item => item.id === currentSong.id)
+    if (type === 'pre') {
+      if (index === 0) {
+        dispatch(getCurrentSongAction(playList[playList.length - 1].id))
+      } else {
+        dispatch(getCurrentSongAction(playList[index - 1].id))
+      }
+    } else {
+      if (index === (playList.length - 1)) {
+        dispatch(getCurrentSongAction(playList[0].id))
+      } else {
+        dispatch(getCurrentSongAction(playList[index + 1].id))
+      }
+    }
   }
 
   const audioRef = useRef()
@@ -71,6 +90,17 @@ const Player = memo(() => {
   }
   // 当前歌曲播放结束后
   const handleTimeEnd = () => {
+    if (playList.length === 1 || !playList.length) {
+      changePlay(false);
+      audioRef.current.pause()
+    } else {
+      const index = playList.findIndex(item => item.id === currentSong.id)
+      if (index === playList.length - 1) {
+        dispatch(getCurrentSongAction(playList[0].id))
+      } else {
+        dispatch(getCurrentSongAction(playList[index + 1].id))
+      }
+    }
   }
   // 滑动滑块时触发
   const sliderChange = useCallback(
@@ -105,18 +135,27 @@ const Player = memo(() => {
         </div>
       </div>
       {
-        playList?.map(item => (
-          <div key={item.id} className='song-item'>
-            {
-              item.id === currentSong.id ? (
-                <CaretRightOutlined className='current-icon' />
-              ) : <div></div>
-            }
-            <div className='text-overflow'>{item.name}</div>
-            <div className='text-overflow'>{item.ar?.map(item => item.name).join('、')}</div>
-            <div>{formatDate(item.dt, 'mm:ss')}</div>
-          </div>
-        ))
+        playList.length ? (
+          playList?.map(item => (
+            <div key={item.id} className='song-item' onClick={() => dispatch(getCurrentSongAction(item.id))}>
+              {
+                item.id === currentSong.id ? (
+                  <CaretRightOutlined className='current-icon' />
+                ) : <div></div>
+              }
+              <div className='text-overflow'>{item.name}</div>
+              <div className='text-overflow'>{item.ar?.map(item => item.name).join('、')}</div>
+              <div>{formatDate(item.dt, 'mm:ss')}</div>
+            </div>
+          ))
+        ) : (
+          <Empty
+            imageStyle={{
+              height: 40,
+            }}
+            description='暂无歌曲'
+          />
+        )
       }
     </PlayListStyle>
   );
@@ -141,7 +180,7 @@ const Player = memo(() => {
           )
         }
         <div className='footer-content'>
-          <StepBackwardOutlined className='icon' onClick={clickPlayer} />
+          <StepBackwardOutlined className='icon' onClick={() => clickPlayer('pre')} />
           {
             play ? (
               <PauseCircleOutlined className='icon play-icon' onClick={changePlayerStatus} />
@@ -149,7 +188,7 @@ const Player = memo(() => {
               <PlayCircleOutlined className='icon play-icon' onClick={changePlayerStatus} />
             )
           }
-          <StepForwardOutlined className='icon' onClick={clickPlayer} />
+          <StepForwardOutlined className='icon' onClick={() => clickPlayer('next')} />
           <div className='song-info'>
             <NavLink to={`/discover/songdetail/${currentSong.id}`}>
               <img
@@ -193,7 +232,7 @@ const Player = memo(() => {
               </div>
             </div>
           </div>
-          <Dropdown overlay={menu} placement="top">
+          <Dropdown overlay={menu} placement="top" getPopupContainer={() => document.getElementsByClassName('content')[0]}>
             <UnorderedListOutlined className='pointer icon' style={{ marginLeft: '30px' }} />
           </Dropdown>
         </div>

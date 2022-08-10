@@ -5,11 +5,11 @@ export const HeaderStyle = styled.div`
   .pointer {
    cursor: pointer;
   }
+  .white {
+    color: #fff !important;
+  }
   .shadow {
     background-color: #272727;
-    a {
-      color: #fff !important;
-    }
   }
 `
 
@@ -27,9 +27,8 @@ export const HearderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   transition: all .5s;
-  a {
+  .white {
     padding: 20px 10px;
-    color: #fff;
     font-family: Poppins;
     text-decoration: none;
     transition: all .5s;

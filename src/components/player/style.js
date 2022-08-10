@@ -158,4 +158,9 @@ export const PlayListStyle = styled.div`
       font-size: 16px;
     }
   }
+  .ant-empty {
+    margin: 0;
+    padding: 20px 0;
+    background-color: #1c1f1f;
+  }
 `

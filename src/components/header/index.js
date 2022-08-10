@@ -105,7 +105,7 @@ const Header = memo(() => {
 
   return (
     <HeaderStyle>
-      <HearderWrapper className={height ? 'shadow' : ''}>
+      <HearderWrapper id='header' className={height ? 'shadow' : ''}>
         {
           token
             ?
@@ -114,11 +114,11 @@ const Header = memo(() => {
             <Avatar className='pointer' style={{ backgroundColor: '#00badb' }} icon={<UserOutlined />} onClick={() => changeDrawerVisible(true)} />
         }
         <div className='center'>
-          <Dropdown overlay={menu}>
-            <NavLink to="/discover">发现音乐</NavLink>
+          <Dropdown overlay={menu} getPopupContainer={() => document.getElementsByClassName('center')[0]}>
+            <NavLink className='white' to="/discover">发现音乐</NavLink>
           </Dropdown>
-          <NavLink to="/friends">我的朋友</NavLink>
-          <NavLink to="/mine">我的音乐</NavLink>
+          <NavLink className='white' to="/friends">我的朋友</NavLink>
+          <NavLink className='white' to="/mine">我的音乐</NavLink>
         </div>
         <Input
           className='search-ipt'
