@@ -1,29 +1,55 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-import { getSingerDetailsAction, getSingerMvAction } from '../../store/actionCreators'
+import { getSingerDetailsAction, getTopSingerAction } from '../../store/actionCreators'
 
-import { Tabs } from 'antd';
+import HotSong from '../hot-song'
+import Mv from '../mv'
+import Album from '../album'
+import Desc from '../desc'
+import NormalSongStyle from '@/components/normal-song-style'
+
+import { Tabs, List } from 'antd';
 
 import {
   SingerDetailsStyle
 } from './style'
 
+import { backTop } from '@/utils/back-top'
+
 const { TabPane } = Tabs;
+
+const HOTSONG = 'hotSong'
+const ALLALBUM = 'allAlbum'
+const MV = 'mv'
+const DESC = 'desc'
+const tabs = [
+  {
+    name: '热门作品',
+    key: HOTSONG
+  },
+  {
+    name: '所有专辑',
+    key: ALLALBUM
+  },
+  {
+    name: '相关MV',
+    key: MV
+  },
+  {
+    name: '艺人介绍',
+    key: DESC
+  },
+]
 
 const SingerDetails = memo((props) => {
 
   const { params } = props.match
 
-  const { details, hotList, album, mv, mvUrl, desc, simiSinger, isLoading } = useSelector(
+  const { details, topSinger } = useSelector(
     state => ({
       details: state.getIn(['singer', 'details']),
-      hotList: state.getIn(['singer', 'hotList']),
-      album: state.getIn(['singer', 'album']),
-      mv: state.getIn(['singer', 'mv']),
-      mvUrl: state.getIn(['singer', 'mvUrl']),
-      desc: state.getIn(['singer', 'desc']),
-      simiSinger: state.getIn(['singer', 'simiSinger']),
+      topSinger: state.getIn(['singer', 'topSinger'])
     }),
     shallowEqual
   )
@@ -31,23 +57,61 @@ const SingerDetails = memo((props) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getSingerDetailsAction(params.id))
-    dispatch(getSingerMvAction(params.id))
+    dispatch(getTopSingerAction())
   }, [dispatch, params])
+  
+  useEffect(() => {
+    backTop()
+  }, [props.match.params.id])
+
+  const [activeKey, setActiveKey] = useState(MV)
+  const handleTabClick = (key) => {
+    setActiveKey(key)
+  }
+
+  const handleClick = item => {
+    props.history.push({
+      pathname: `/discover/singerdetails/${item.id}`
+    })
+  }
 
   return (
     <SingerDetailsStyle src={details.cover}>
       <div className='singer-img' />
-      <Tabs defaultActiveKey="1" centered>
-        <TabPane tab="Tab 1" key="1">
-          Content of Tab Pane 1
-        </TabPane>
-        <TabPane tab="Tab 2" key="2">
-          Content of Tab Pane 2
-        </TabPane>
-        <TabPane tab="Tab 3" key="3">
-          Content of Tab Pane 3
-        </TabPane>
-      </Tabs>
+      <div className='card-container'>
+        <Tabs
+          activeKey={activeKey}
+          onTabClick={handleTabClick}
+          centered
+          type="card"
+        >
+          {
+            tabs.map(item => (
+              <TabPane tab={item.name} key={item.key}>
+                {item.key === HOTSONG && <HotSong {...props} />}
+                {item.key === ALLALBUM && <Album {...props} />}
+                {item.key === MV && <Mv {...props} />}
+                {item.key === DESC && <Desc {...props} />}
+              </TabPane>
+            ))
+          }
+        </Tabs>
+      </div>
+      <div className='simi'>
+        <List
+          className='simi-song'
+          header='热门歌手'
+          itemLayout="horizontal"
+          dataSource={topSinger}
+          renderItem={item => (
+            <NormalSongStyle
+              picUrl={item.picUrl}
+              singerName={item.name}
+              onClick={() => handleClick(item)}
+            />
+          )}
+        />
+      </div>
     </SingerDetailsStyle>
   )
 })

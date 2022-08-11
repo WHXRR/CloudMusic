@@ -8,9 +8,9 @@ const defaultState = Map({
   album: [],
   mv: [],
   mvUrl: '',
-  desc: [],
+  desc: {},
   simiSinger: [],
-  isLoading: true
+  topSinger: []
 })
 
 function reducer(state = defaultState, action) {
@@ -31,8 +31,8 @@ function reducer(state = defaultState, action) {
       return state.set('desc', action.desc)
     case actionTypes.CHANGE_SIMI_SINGER:
       return state.set('simiSinger', action.simiSinger)
-    case actionTypes.CHANGE_LOADING:
-      return state.set('isLoading', action.isLoading)
+    case actionTypes.CHANGE_TOP_SINGER:
+      return state.set('topSinger', action.topSinger)
     default:
       return state
   }

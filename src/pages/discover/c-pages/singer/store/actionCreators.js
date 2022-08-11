@@ -44,9 +44,9 @@ export const changeSimiSingerAction = simiSinger => ({
   simiSinger
 })
 
-export const changeLoadingAction = isLoading => ({
-  type: actionTypes.CHANGE_LOADING,
-  isLoading
+export const changeTopSingerAction = topSinger => ({
+  type: actionTypes.CHANGE_TOP_SINGER,
+  topSinger
 })
 
 // --------------------------------------------------------network--------------------------------------------------------
@@ -69,7 +69,11 @@ export const getSingerDetailsAction = (id) => {
 export const getSingerHotSongAction = (id) => {
   return dispatch => {
     singerService.getSingerHotSong(id).then(res => {
-      dispatch(changeSingerHotSongAction(res.artists))
+      const arr = res.songs.map((item, index) => ({
+        index: index + 1,
+        ...item
+      }))
+      dispatch(changeSingerHotSongAction(arr))
     })
   }
 }
@@ -77,7 +81,7 @@ export const getSingerHotSongAction = (id) => {
 export const getSingerAlbumAction = (id, limit, offset) => {
   return dispatch => {
     singerService.getSingerAlbum(id, limit, offset).then(res => {
-      dispatch(changeSingerAlbumAction(res.artists))
+      dispatch(changeSingerAlbumAction(res.hotAlbums))
     })
   }
 }
@@ -86,8 +90,6 @@ export const getSingerMvAction = (id) => {
   return dispatch => {
     singerService.getSingerMv(id).then(res => {
       dispatch(changeSingerMvAction(res.mvs))
-      dispatch(getSingerMvUrlAction(res.mvs[0].id))
-      dispatch(changeLoadingAction(false))
     })
   }
 }
@@ -103,7 +105,7 @@ export const getSingerMvUrlAction = (id) => {
 export const getSingerDescAction = (id) => {
   return dispatch => {
     singerService.getSingerDesc(id).then(res => {
-      dispatch(changeSingerDescAction(res.artists))
+      dispatch(changeSingerDescAction(res))
     })
   }
 }
@@ -112,6 +114,14 @@ export const getSimiSingerAction = (id) => {
   return dispatch => {
     singerService.getSimiSinger(id).then(res => {
       dispatch(changeSimiSingerAction(res.artists))
+    })
+  }
+}
+
+export const getTopSingerAction = () => {
+  return dispatch => {
+    singerService.getTopSinger(5).then(res => {
+      dispatch(changeTopSingerAction(res.artists))
     })
   }
 }

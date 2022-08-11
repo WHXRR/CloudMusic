@@ -91,3 +91,13 @@ export function getSimiSinger(id) {
     }
   })
 }
+
+export function getTopSinger(limit, offset) {
+  return request({
+    url: '/top/artists',
+    params: {
+      limit,
+      offset
+    }
+  })
+}
