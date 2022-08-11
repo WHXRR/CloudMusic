@@ -11,7 +11,7 @@ const NormalSongStyle = memo((props) => {
   const { onClick } = props
 
   return (
-    <HotItem onClick={onClick}>
+    <HotItem onClick={onClick} style={props.style} className={props.className}>
       <div className='hot-img'>
         <img src={props.picUrl ? props.picUrl : props[props.img]} alt={props.name} />
         <div className='mantle'>
@@ -28,6 +28,9 @@ const NormalSongStyle = memo((props) => {
       </div>
       <div className='hot-title' title={props.name}>{props.name}</div>
       <div className='singer-name' title={props.singerName}>{props.singerName}</div>
+      {
+        props.badge && <>{props.children}</>
+      }
     </HotItem>
   )
 })

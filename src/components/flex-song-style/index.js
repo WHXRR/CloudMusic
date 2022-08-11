@@ -19,6 +19,7 @@ const FlexSongStyle = memo((props) => {
         <div className='info'>
           <div className='hot-title'>{props.name}</div>
           <div className='singer-name'>{props.singerName}</div>
+          {props.children}
           {
             props.playCount ? (
               <>
