@@ -9,6 +9,7 @@ import { reducer as albumDetailsReducer } from "../pages/discover/c-pages/album-
 import { reducer as songListReducer } from "../pages/discover/c-pages/song-sheet/store";
 import { reducer as newDiscReducer } from "../pages/discover/c-pages/new-disc/store";
 import { reducer as topListReducer } from "../pages/discover/c-pages/ranking-list/store";
+import { reducer as singerReducer } from "../pages/discover/c-pages/singer/store";
 
 const cReducer = combineReducers({
   recommend: recommendReducer,
@@ -20,6 +21,7 @@ const cReducer = combineReducers({
   albumDetails: albumDetailsReducer,
   newDisc: newDiscReducer,
   topList: topListReducer,
+  singer: singerReducer,
 })
 
 export default cReducer 

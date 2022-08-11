@@ -17,5 +17,8 @@
 .ant-back-top {
   bottom: 100px !important;
 }
+.singer-item-hover .ant-popover-inner-content {
+  padding: 0 !important;
+}
 
 @import "~normalize.css";

@@ -11,6 +11,7 @@ import NewDisc from '@/pages/discover/c-pages/new-disc'
 import SongDetail from '@/pages/discover/c-pages/song-detail'
 import SongListDetails from '@/pages/discover/c-pages/song-list-details'
 import AlbumDetails from '@/pages/discover/c-pages/album-details'
+import SingerDetails from '@/pages/discover/c-pages/singer/c-pages/singer-details'
 
 import Mine from '@/pages/mine'
 import Friends from '@/pages/friends'
@@ -67,6 +68,10 @@ const routes = [
       {
         path: '/discover/albumdetails/:id',
         component: AlbumDetails
+      },
+      {
+        path: '/discover/singerdetails/:id',
+        component: SingerDetails
       },
     ]
   },
