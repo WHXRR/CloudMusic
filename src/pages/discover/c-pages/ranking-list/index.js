@@ -2,13 +2,14 @@ import React, { memo, useEffect, useState } from 'react'
 
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
-import { getTopListAction, getCurrentTopListAction } from './store/actionCreators'
+import { getTopListAction, getCurrentTopListAction, getTopListDetailsAction } from './store/actionCreators'
 
 import DetailContent from '@/components/detail-content'
 import TopListComment from './c-pages/comment'
+import DetailsBtns from '@/components/detailsBtns'
+import SongTable from '@/components/songTable'
 
-import { Drawer, Button, Table, Tag } from 'antd'
-import { PlayCircleOutlined, StarOutlined, DownloadOutlined, PaperClipOutlined, CommentOutlined } from '@ant-design/icons';
+import { Drawer, Tag } from 'antd'
 import {
   TopListStyle,
   TopListItem
@@ -17,7 +18,6 @@ import {
 import { NavLink } from 'react-router-dom';
 
 import { formatMinuteSecond } from '@/utils/format-utils.js'
-
 import { backTop } from '@/utils/back-top'
 
 const tagsColor = {
@@ -33,14 +33,6 @@ const tagsColor = {
 }
 
 const columns = [
-  {
-    title: '#',
-    width: 50,
-    align: 'center',
-    dataIndex: 'index',
-    key: 'index',
-    render: (text) => <strong style={{ color: '#b3b3b3' }}>{text}</strong>,
-  },
   {
     title: '歌曲标题',
     width: 240,
@@ -65,7 +57,13 @@ const columns = [
       <>
         {
           text?.ar?.map((item, idx) => (
-            <Tag color={tagsColor[`color${idx + 1}`]} key={idx} style={{ margin: '2px' }}>{item.name}</Tag>
+            <Tag
+              color={tagsColor[`color${idx + 1}`]}
+              key={idx}
+              style={{ margin: '2px' }}
+            >
+              <NavLink to={`/discover/singerdetails/${item.id}`}>{item.name}</NavLink>
+            </Tag>
           ))
         }
       </>
@@ -75,9 +73,7 @@ const columns = [
 
 const RankingList = memo((props) => {
 
-  useEffect(() => {
-    backTop()
-  }, [props.match.params.id])
+  const { params } = props.match
 
   const dispatch = useDispatch()
   const { list, currentList } = useSelector(
@@ -89,8 +85,16 @@ const RankingList = memo((props) => {
   )
 
   useEffect(() => {
-    dispatch(getTopListAction())
-  }, [dispatch])
+    backTop()
+  }, [currentList])
+
+  useEffect(() => {
+    if (+params.id) {
+      dispatch(getTopListDetailsAction(params.id))
+    } else {
+      dispatch(getTopListAction())
+    }
+  }, [dispatch, params])
 
   const [visible, setVisible] = useState(false)
   const onClose = () => {
@@ -139,14 +143,12 @@ const RankingList = memo((props) => {
         <div className='other-info text-center'>
           <div className='grey'>{currentList.description}</div>
         </div>
-        <div className='btns'>
-          <Button type="primary" shape="round" ghost icon={<PlayCircleOutlined />}>播放</Button>
-          <Button type="primary" shape="round" ghost icon={<StarOutlined />}>收藏</Button>
-          <Button type="primary" shape="round" ghost icon={<PaperClipOutlined />}>分享</Button>
-          <Button type="primary" shape="round" ghost icon={<DownloadOutlined />}>下载</Button>
-          <Button type="primary" shape="round" ghost icon={<CommentOutlined />}>评论({currentList.commentCount})</Button>
-        </div>
-
+        {
+          currentList.tracks && <DetailsBtns
+            songId={currentList.tracks[0]?.id}
+            commentCount={currentList.commentCount}
+          />
+        }
         <div className='table-top'>
           <div className='flex'>
             <div className='title'>歌曲列表</div>
@@ -156,13 +158,10 @@ const RankingList = memo((props) => {
             <div>播放：<span className='red'>{currentList.playCount}</span> 次</div>
           </div>
         </div>
-        <Table
-          columns={columns}
+        <SongTable
           dataSource={currentList.tracks}
-          pagination={false}
-          size='small'
+          columns={columns}
           scroll={{ y: 300 }}
-          rowKey="id"
           className='song-list-table'
         />
       </DetailContent>

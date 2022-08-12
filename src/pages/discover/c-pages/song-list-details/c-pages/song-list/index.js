@@ -3,13 +3,15 @@ import React, { memo, useEffect } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getSongListDetailsAction } from '../../store/actionCreators'
 
+import DetailsBtns from '@/components/detailsBtns'
+import SongTable from '@/components/songTable'
 
-import { Button, Table, Tag } from 'antd'
-import { PlayCircleOutlined, StarOutlined, DownloadOutlined, PaperClipOutlined, CommentOutlined } from '@ant-design/icons';
+import { Tag } from 'antd'
 
 import { SongListDetailStyle } from './style'
 
 import { formatMinuteSecond } from '@/utils/format-utils.js'
+
 import { NavLink } from 'react-router-dom';
 
 const tagsColor = {
@@ -38,14 +40,6 @@ const SongList = memo((props) => {
   }
   const columns = [
     {
-      title: '#',
-      width: 50,
-      align: 'center',
-      dataIndex: 'index',
-      key: 'index',
-      render: (text) => <strong style={{ color: '#b3b3b3' }}>{text}</strong>,
-    },
-    {
       title: '歌曲标题',
       width: 240,
       dataIndex: 'name',
@@ -69,7 +63,13 @@ const SongList = memo((props) => {
         <>
           {
             data.singer?.map((item, idx) => (
-              <Tag color={tagsColor[`color${idx + 1}`]} key={idx} style={{ margin: '2px' }}>{item.name}</Tag>
+              <Tag
+                color={tagsColor[`color${idx + 1}`]}
+                key={idx}
+                style={{ margin: '2px' }}
+              >
+                <NavLink to={`/discover/singerdetails/${item.id}`}>{item.name}</NavLink>
+              </Tag>
             ))
           }
         </>
@@ -106,13 +106,12 @@ const SongList = memo((props) => {
         <span className='link'>{detail.creator?.nickname}</span>
         <div className='grey'>{`${createTime.getFullYear()}-${+createTime.getMonth() + 1}-${createTime.getDate()}`} 创建</div>
       </div>
-      <div className='btns'>
-        <Button type="primary" shape="round" ghost icon={<PlayCircleOutlined />}>播放</Button>
-        <Button type="primary" shape="round" ghost icon={<StarOutlined />}>收藏</Button>
-        <Button type="primary" shape="round" ghost icon={<PaperClipOutlined />}>分享</Button>
-        <Button type="primary" shape="round" ghost icon={<DownloadOutlined />}>下载</Button>
-        <Button type="primary" shape="round" ghost icon={<CommentOutlined />}>评论({detail.commentCount})</Button>
-      </div>
+      {
+        detail?.tracks && <DetailsBtns
+          songId={detail?.tracks[0]?.id}
+          commentCount={detail.commentCount}
+        />
+      }
       <div className='text-left'>
         <span className='grey'>标签：
           {
@@ -132,13 +131,10 @@ const SongList = memo((props) => {
         </div>
         <div>播放：<strong className='red'>{detail?.playCount}</strong>次</div>
       </div>
-      <Table
-        columns={columns}
+      <SongTable
         dataSource={detail?.tracks}
-        pagination={false}
-        size='small'
+        columns={columns}
         scroll={{ y: 300 }}
-        rowKey="id"
         className='song-list-table'
       />
     </SongListDetailStyle>

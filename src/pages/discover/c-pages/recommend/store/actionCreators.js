@@ -65,21 +65,25 @@ export const getListsAction = () => {
     ]).then(([list1, list2, list3, list4]) => {
       const arr = [
         {
+          id: allLists.list[0].id,
           name: allLists.list[0].name,
           img: allLists.list[0].coverImgUrl,
           songs: list1.songs
         },
         {
+          id: allLists.list[1].id,
           name: allLists.list[1].name,
           img: allLists.list[1].coverImgUrl,
           songs: list2.songs
         },
         {
+          id: allLists.list[2].id,
           name: allLists.list[2].name,
           img: allLists.list[2].coverImgUrl,
           songs: list3.songs
         },
         {
+          id: allLists.list[3].id,
           name: allLists.list[3].name,
           img: allLists.list[3].coverImgUrl,
           songs: list4.songs

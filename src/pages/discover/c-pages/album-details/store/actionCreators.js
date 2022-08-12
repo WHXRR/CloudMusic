@@ -37,6 +37,7 @@ export const getAlbumDetailsAction = (id) => {
       const obj = {
         album: res.album,
         songs: res.songs?.map((item, idx) => ({
+          ...item,
           index: idx + 1,
           name: item.name,
           dt: item.dt,

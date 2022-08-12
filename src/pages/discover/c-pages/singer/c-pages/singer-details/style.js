@@ -9,6 +9,13 @@ export const SingerDetailsStyle = styled.div`
     background-position: center center;
     background-image: url('${props => props.src}');
   }
+  .details-name {
+    padding-bottom: 15px;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    font-family: cursive;
+  }
   .ant-tabs-nav-wrap {
     background: #f5f5f5;
   }

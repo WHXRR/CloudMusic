@@ -36,8 +36,16 @@ export const getTopListAction = () => {
   return dispatch => {
     topListService.getTopList().then(res => {
       dispatch(changeTopListAction(res.list))
-      dispatch(changeTopListTotalAction(res.total))
       dispatch(getCurrentTopListAction(res.list[0].id))
+    })
+  }
+}
+
+export const getTopListDetailsAction = (id) => {
+  return dispatch => {
+    topListService.getTopList().then(res => {
+      dispatch(changeTopListAction(res.list))
+      dispatch(getCurrentTopListAction(id))
     })
   }
 }

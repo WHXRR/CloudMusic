@@ -41,6 +41,7 @@ export const DiscSwiper = styled.div`
   gap: 10px;
   justify-items: center;
   grid-template-columns: repeat(5, 1fr);
+  overflow: hidden;
 `
 export const DiscItem = styled.div`
   cursor: pointer;

@@ -6,9 +6,8 @@ import { getBannersAction, getLyricAction } from './store/actionCreators'
 import DetailContent from '@/components/detail-content'
 import Comments from './c-cpns/comments'
 import SimiSong from './c-cpns/simi-song'
+import DetailsBtns from '@/components/detailsBtns'
 
-import { Button } from 'antd'
-import { PlayCircleOutlined, StarOutlined, DownloadOutlined, PaperClipOutlined, CommentOutlined } from '@ant-design/icons';
 import { SongDetailStyle } from './style'
 
 import { backTop } from '@/utils/back-top'
@@ -17,12 +16,11 @@ const SongDetail = memo((props) => {
 
   const dispatch = useDispatch()
   const { params } = props.match
-  const { detail, lyric, total, globalBtnLoading } = useSelector(
+  const { detail, lyric, total } = useSelector(
     state => ({
       detail: state.getIn(['songDetail', 'detail']),
       lyric: state.getIn(['songDetail', 'lyric']),
-      total: state.getIn(['songDetail', 'total']),
-      globalBtnLoading: state.getIn(['login', 'globalBtnLoading']),
+      total: state.getIn(['songDetail', 'total'])
     }),
     shallowEqual
   )
@@ -45,13 +43,12 @@ const SongDetail = memo((props) => {
           <span>所属专辑：</span>
           <span className='link'>{detail[0]?.al?.name}</span>
         </div>
-        <div className='btns'>
-          <Button type="primary" shape="round" ghost icon={<PlayCircleOutlined />} loading={globalBtnLoading}>播放</Button>
-          <Button type="primary" shape="round" ghost icon={<StarOutlined />}>收藏</Button>
-          <Button type="primary" shape="round" ghost icon={<PaperClipOutlined />}>分享</Button>
-          <Button type="primary" shape="round" ghost icon={<DownloadOutlined />}>下载</Button>
-          <Button type="primary" shape="round" ghost icon={<CommentOutlined />}>评论({total})</Button>
-        </div>
+        {
+          params.id && <DetailsBtns
+            songId={params.id}
+            commentCount={total}
+          />
+        }
         <div className='lyric'>
           {
             lyric.map((item, idx) => (

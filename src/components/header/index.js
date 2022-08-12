@@ -10,7 +10,10 @@ import {
   UserOutlined,
   VerticalAlignBottomOutlined,
   HighlightOutlined,
-  ExclamationCircleOutlined
+  ExclamationCircleOutlined,
+  CustomerServiceOutlined,
+  TeamOutlined,
+  SmileOutlined
 } from '@ant-design/icons';
 import {
   Dropdown,
@@ -44,6 +47,107 @@ const Header = memo(() => {
 
   // 个人菜单
   const otherMenu = [
+    {
+      key: '5',
+      label: (
+        <NavLink to='/discover/recommend'>
+          发现音乐
+        </NavLink>
+      ),
+      icon: <CustomerServiceOutlined />,
+      children: [
+        {
+          key: 'sub1',
+          label: (
+            <NavLink to='/discover/recommend'>
+              推荐
+            </NavLink>
+          ),
+        },
+        {
+          key: 'sub2',
+          label: (
+            <NavLink to={`/discover/rankinglist/${0}`}>
+              排行榜
+            </NavLink>
+          ),
+        },
+        {
+          key: 'sub3',
+          label: (
+            <NavLink to='/discover/songsheet'>
+              歌单
+            </NavLink>
+          ),
+        },
+        {
+          key: 'sub4',
+          label: (
+            <NavLink to='/discover/anchorstation'>
+              主播电台
+            </NavLink>
+          ),
+        },
+        {
+          key: 'sub5',
+          label: (
+            <NavLink to='/discover/singer'>
+              歌手
+            </NavLink>
+          ),
+        },
+        {
+          key: 'sub6',
+          label: (
+            <NavLink to='/discover/newdisc'>
+              新碟上架
+            </NavLink>
+          ),
+        },
+      ]
+    },
+    {
+      key: '6',
+      label: (
+        <NavLink to='/friends'>
+          我的朋友
+        </NavLink>
+      ),
+      icon: <TeamOutlined />,
+    },
+    {
+      key: '7',
+      label: (
+        <NavLink to='/mine'>
+          我的音乐
+        </NavLink>
+      ),
+      icon: <SmileOutlined />,
+    },
+    {
+      key: '2',
+      label:
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter"
+        >
+          下载客户端
+        </a>,
+      icon: <VerticalAlignBottomOutlined />,
+    },
+    {
+      key: '3',
+      label:
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter"
+        >
+          创作者中心
+        </a>,
+      icon: <HighlightOutlined />,
+    },
     token ? (
       {
         key: '4',
@@ -57,20 +161,6 @@ const Header = memo(() => {
         icon: <UserOutlined />,
       }
     ),
-    {
-      key: '2',
-      label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
-        下载客户端
-      </a>,
-      icon: <VerticalAlignBottomOutlined />,
-    },
-    {
-      key: '3',
-      label: <a target="_blank" rel="noopener noreferrer" href="https://music.163.com/#/login?targetUrl=%2Fcreatorcenter">
-        创作者中心
-      </a>,
-      icon: <HighlightOutlined />,
-    }
   ]
   const onClick = ({ key }) => {
     switch (key) {
@@ -127,6 +217,7 @@ const Header = memo(() => {
             <SearchOutlined className='search-icon' />
           }
         />
+        <SearchOutlined className='search-icon search-icon-xs pointer' />
       </HearderWrapper>
       <Drawer
         width={300}

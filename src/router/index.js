@@ -38,7 +38,7 @@ const routes = [
         component: Recommend
       },
       {
-        path: '/discover/rankinglist',
+        path: '/discover/rankinglist/:id',
         component: RankingList
       },
       {

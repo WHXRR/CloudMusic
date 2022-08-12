@@ -27,6 +27,21 @@ export const HearderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   transition: all .5s;
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 200px 1fr 200px;
+  }
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 50px 1fr;
+    .center {
+      display: none !important;
+    }
+    .search-ipt {
+      display: none !important;
+    }
+    .search-icon-xs {
+      display: block !important;
+    }
+  }
   .white {
     padding: 20px 10px;
     font-family: Poppins;
@@ -45,6 +60,7 @@ export const HearderWrapper = styled.div`
     justify-self: center;
   }
   .search-ipt {
+    margin: 15px 0;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -57,5 +73,12 @@ export const HearderWrapper = styled.div`
       cursor: pointer;
       color: #fff;
     }
+  }
+  .search-icon-xs {
+    display: none;
+    margin: 19px 0;
+    color: #fff;
+    font-size: 25px;
+    text-align: right;
   }
 `

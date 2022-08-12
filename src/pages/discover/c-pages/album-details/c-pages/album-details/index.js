@@ -3,13 +3,15 @@ import React, { memo, useEffect } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getAlbumDetailsAction } from '../../store/actionCreators'
 
+import DetailsBtns from '@/components/detailsBtns'
+import SongTable from '@/components/songTable'
 
-import { Button, Table, Tag } from 'antd'
-import { PlayCircleOutlined, StarOutlined, DownloadOutlined, PaperClipOutlined, CommentOutlined } from '@ant-design/icons';
+import { Tag } from 'antd'
 
 import { SongListDetailStyle } from './style'
 
 import { formatMinuteSecond } from '@/utils/format-utils.js'
+
 import { NavLink } from 'react-router-dom';
 
 const tagsColor = {
@@ -30,14 +32,6 @@ const SongList = memo((props) => {
 
   const columns = [
     {
-      title: '#',
-      width: 50,
-      align: 'center',
-      dataIndex: 'index',
-      key: 'index',
-      render: (text) => <strong style={{ color: '#b3b3b3' }}>{text}</strong>,
-    },
-    {
       title: '歌曲标题',
       width: 240,
       dataIndex: 'name',
@@ -57,11 +51,17 @@ const SongList = memo((props) => {
       align: 'center',
       dataIndex: 'singer_name',
       key: 'singer_name',
-      render: (text) => (
+      render: (_, data) => (
         <>
           {
-            text?.map((item, idx) => (
-              <Tag color={tagsColor[`color${idx + 1}`]} key={idx} style={{ margin: '2px' }}>{item}</Tag>
+            data?.ar.map((item, idx) => (
+              <Tag
+                color={tagsColor[`color${idx + 1}`]}
+                key={idx}
+                style={{ margin: '2px' }}
+              >
+                <NavLink to={`/discover/singerdetails/${item.id}`}>{item.name}</NavLink>
+              </Tag>
             ))
           }
         </>
@@ -91,15 +91,13 @@ const SongList = memo((props) => {
         <span>歌手：{album?.artists.map((item, idx) => <Tag key={item.id} color={tagsColor[`color${idx + 1}`]}>{item.name}</Tag>)}</span>
         <div className='grey'>发行时间：{`${createTime.getFullYear()}-${+createTime.getMonth() + 1}-${createTime.getDate()}`}</div>
       </div>
-      <div className='btns'>
-        <Button type="primary" shape="round" ghost icon={<PlayCircleOutlined />}>播放</Button>
-        <Button type="primary" shape="round" ghost icon={<StarOutlined />}>收藏</Button>
-        <Button type="primary" shape="round" ghost icon={<PaperClipOutlined />}>分享</Button>
-        <Button type="primary" shape="round" ghost icon={<DownloadOutlined />}>下载</Button>
-        <Button type="primary" shape="round" ghost icon={<CommentOutlined />}>评论({total})</Button>
-      </div>
-
-      <div className='grey description' style={{whiteSpace: 'pre-line'}}>
+      {
+        songs && <DetailsBtns
+          songId={songs[0]?.id}
+          commentCount={total}
+        />
+      }
+      <div className='grey description' style={{ whiteSpace: 'pre-line' }}>
         <div className='text-bold'>专辑介绍</div>
         <div dangerouslySetInnerHTML={{ __html: album?.description }}></div>
       </div>
@@ -109,13 +107,10 @@ const SongList = memo((props) => {
           <div>{songs?.length}首歌</div>
         </div>
       </div>
-      <Table
-        columns={columns}
+      <SongTable
         dataSource={songs}
-        pagination={false}
-        size='small'
+        columns={columns}
         scroll={{ y: 300 }}
-        rowKey="id"
         className='song-list-table'
       />
     </SongListDetailStyle>

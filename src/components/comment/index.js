@@ -75,7 +75,7 @@ const Comments = memo((props) => {
   }
 
   return (
-    <CommentsStyle>
+    <CommentsStyle id='comment'>
       <Comment
         avatar={
           <Avatar

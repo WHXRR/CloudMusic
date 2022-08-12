@@ -3,7 +3,7 @@ import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { getSingerHotSongAction } from '../../store/actionCreators'
 
-import { Table } from 'antd';
+import SongTable from '@/components/songTable'
 
 import { formatMinuteSecond } from '@/utils/format-utils.js'
 
@@ -26,14 +26,6 @@ const HotSong = memo((props) => {
   }, [dispatch, params])
 
   const columns = [
-    {
-      title: '#',
-      width: 50,
-      align: 'center',
-      dataIndex: 'index',
-      key: 'index',
-      render: (text) => <strong style={{ color: '#b3b3b3' }}>{text}</strong>,
-    },
     {
       title: '歌曲标题',
       width: 240,
@@ -70,13 +62,9 @@ const HotSong = memo((props) => {
 
   return (
     <div>
-      <Table
-        columns={columns}
+      <SongTable
         dataSource={hotList}
-        pagination={false}
-        size='small'
-        rowKey="id"
-        className='song-list-table'
+        columns={columns}
       />
     </div>
   )

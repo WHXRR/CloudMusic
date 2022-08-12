@@ -41,6 +41,12 @@ const Recommend = memo((props) => {
     dispatch(getCurrentSongAction(data.id))
   }
 
+  const handleMore = data => {
+    props.history.push({
+      pathname: `/discover/rankinglist/${data.id}`,
+    })
+  }
+
   return (
     <Row gutter={[20, 20]} justify="space-around">
       {
@@ -52,7 +58,7 @@ const Recommend = memo((props) => {
                 loading={listLoading}
                 style={{ width: 250, margin: '16px auto' }}
                 actions={[
-                  <div>
+                  <div onClick={() => handleMore(item)}>
                     查看更多
                     <RightOutlined />
                   </div>

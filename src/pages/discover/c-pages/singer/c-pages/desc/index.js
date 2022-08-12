@@ -30,7 +30,7 @@ const Desc = memo((props) => {
       {
         desc.introduction?.map((item, idx) => (
           <div key={idx}>
-            <div className='title'>{item.ti}</div>
+            <div className='title'>{item.ti}&nbsp;</div>
             <div className='content' style={{ whiteSpace: 'pre-line' }}>{item.txt}</div>
           </div>
         ))

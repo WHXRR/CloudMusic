@@ -15,7 +15,7 @@ export const menu = (
       {
         key: '2',
         label: (
-          <NavLink to='/discover/rankinglist'>
+          <NavLink to={`/discover/rankinglist/${0}`}>
             排行榜
           </NavLink>
         ),

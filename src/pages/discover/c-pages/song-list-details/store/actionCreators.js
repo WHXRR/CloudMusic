@@ -43,6 +43,7 @@ export const getSongListDetailsAction = (id) => {
     const obj = {
       ...res1.playlist,
       tracks: res2.songs?.map((item, idx) => ({
+        ...item,
         index: idx + 1,
         name: item.name,
         dt: item.dt,

@@ -64,7 +64,7 @@ const SingerDetails = memo((props) => {
     backTop()
   }, [props.match.params.id])
 
-  const [activeKey, setActiveKey] = useState(MV)
+  const [activeKey, setActiveKey] = useState(HOTSONG)
   const handleTabClick = (key) => {
     setActiveKey(key)
   }
@@ -79,6 +79,7 @@ const SingerDetails = memo((props) => {
     <SingerDetailsStyle src={details.cover}>
       <div className='singer-img' />
       <div className='card-container'>
+        <div className='details-name'>{details.name}</div>
         <Tabs
           activeKey={activeKey}
           onTabClick={handleTabClick}
