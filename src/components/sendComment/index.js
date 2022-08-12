@@ -25,7 +25,7 @@ const SendComment = memo((props) => {
     commentLoading,
     size,
     rows,
-    replayTo
+    replayTo,
   } = props
 
   const dispatch = useDispatch()

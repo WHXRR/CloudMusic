@@ -16,6 +16,8 @@ import SingerDetails from '@/pages/discover/c-pages/singer/c-pages/singer-detail
 import Mine from '@/pages/mine'
 import Friends from '@/pages/friends'
 
+import Profile from '../pages/profile'
+
 const routes = [
   {
     path: '/',
@@ -82,6 +84,10 @@ const routes = [
   {
     path: '/mine',
     component: Mine
+  },
+  {
+    path: '/user/home/:id',
+    component: Profile
   }
 ]
 export default routes

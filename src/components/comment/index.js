@@ -27,7 +27,7 @@ const Comments = memo((props) => {
     handleLike,
     handleReplay,
     handleSubmit,
-    commentLoading
+    commentLoading,
   } = props
 
   const { token } = useSelector(
@@ -81,7 +81,7 @@ const Comments = memo((props) => {
               actions={
                 [
                   <div className='flex'>
-                    <span className='pointer' onClick={() => clickReplay(item, idx ,'hot')}>回复</span>
+                    <span className='pointer' onClick={() => clickReplay(item, idx, 'hot')}>回复</span>
                     <div onClick={() => clickLike(item, 'hot')} className='pointer'>
                       {
                         item.liked ? (

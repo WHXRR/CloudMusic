@@ -10,6 +10,7 @@ import { BackTop } from 'antd';
 import Header from './components/header'
 import Footer from './components/footer'
 import Player from './components/player'
+import ProfileSidebar from './pages/profile/c-pages/sidebar'
 
 const App = memo(() => {
   return (
@@ -20,6 +21,7 @@ const App = memo(() => {
         <div>{renderRoutes(routes)}</div>
         <Footer></Footer>
         <Player />
+        <ProfileSidebar />
       </HashRouter>
     </Provider>
   )

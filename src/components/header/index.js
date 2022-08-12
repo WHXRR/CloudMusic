@@ -174,7 +174,10 @@ const Header = memo(() => {
           okText: '确定',
           cancelText: '取消',
           onOk() {
-            dispatch(getLoginout())
+            return new Promise((resolve, reject) => {
+              dispatch(getLoginout())
+              resolve()
+            })
           }
         });
         break;
