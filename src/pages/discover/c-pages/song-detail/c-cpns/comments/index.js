@@ -54,21 +54,37 @@ const Comments = memo((props) => {
     [params.id, dispatch, hotComments, comments]
   )
 
-  const handleReplay = item => {
-    console.log({ item });
+  const handleReplay = (item, idx, type) => {
+    if (type === 'hot') {
+      const newArr = [...hotComments]
+      newArr.forEach((item, index) => {
+        if (index === idx) return
+        item.isReplay = false
+      })
+      newArr[idx].isReplay = !item.isReplay
+      dispatch(changeHotCommentAction(newArr))
+    } else {
+      const newArr = [...comments]
+      newArr.forEach((item, index) => {
+        if (index === idx) return
+        item.isReplay = false
+      })
+      newArr[idx].isReplay = !item.isReplay
+      dispatch(changeCommentAction(newArr))
+    }
   }
 
   const [commentLoading, changeLoading] = useState(false)
   const handleSubmit = useCallback(
-    content => {
+    (content, replayTo) => {
       changeLoading(true)
-      handleComment(params.id, content, 1).then(res => {
+      handleComment(params.id, content, replayTo ? 2 : 1, 0, replayTo ? replayTo.commentId : null).then(res => {
         if (res.code === 200) {
           message.success('评论成功').then(() => {
             dispatch(getCommentAction(params.id))
           })
         } else {
-          message.error('评论失败')
+          message.error(res.msg)
         }
         changeLoading(false)
       })

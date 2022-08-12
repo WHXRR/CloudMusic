@@ -1,32 +1,23 @@
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 
 import Cpagination from '@/components/pagination'
+import SendComment from '../sendComment'
 
 import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 import { changeDialogVisibleAction } from '@/components/login-dialog/store/actionCreators'
 
-import { Button, Avatar, Comment, Form, Input, List, message } from 'antd'
-import { FireFilled } from '@ant-design/icons';
+import { Comment, List, message } from 'antd'
+import { FireOutlined, FireFilled } from '@ant-design/icons';
 
-import { CommentsStyle } from './style'
-
-const { TextArea } = Input;
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
-  <>
-    <Form.Item>
-      <TextArea placeholder='说点什么...' rows={4} onChange={onChange} value={value} />
-    </Form.Item>
-    <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-        评论
-      </Button>
-    </Form.Item>
-  </>
-);
+import {
+  CommentsStyle,
+  NameStyle,
+  SubCommentsStyle,
+  ReplayStyle
+} from './style'
 
 const Comments = memo((props) => {
   const dispatch = useDispatch()
-
   const {
     hotComment,
     newComment,
@@ -39,19 +30,18 @@ const Comments = memo((props) => {
     commentLoading
   } = props
 
-  const { token, profile } = useSelector(
+  const { token } = useSelector(
     state => ({
       token: state.getIn(['login', 'token']),
-      profile: state.getIn(['login', 'profile']),
     }),
     shallowEqual
   )
-  const clickReplay = data => {
+  const clickReplay = (data, idx, type) => {
     if (!token) {
       message.warning('请先登录！')
       return dispatch(changeDialogVisibleAction(true))
     }
-    handleReplay(data)
+    handleReplay(data, idx, type)
   }
   const clickLike = (data, type) => {
     if (!token) {
@@ -61,60 +51,80 @@ const Comments = memo((props) => {
     handleLike(data, type)
   }
 
-  const [value, changeValue] = useState('')
-  const onChange = (e) => {
-    changeValue(e.target.value)
-  }
-  const onSubmit = () => {
-    if (!token) {
-      message.warning('请先登录！')
-      return dispatch(changeDialogVisibleAction(true))
-    }
-    if (!value) return
-    handleSubmit(value)
+  const author = (item) => {
+    return (
+      <NameStyle>
+        <span>{item.nickname}</span>
+        <img
+          src={item.avatarDetail?.identityIconUrl}
+          style={{ width: '12px' }}
+          alt=''
+        />
+      </NameStyle>
+    )
   }
 
   return (
     <CommentsStyle id='comment'>
-      <Comment
-        avatar={
-          <Avatar
-            src={profile.avatarUrl || "https://joeschmoe.io/api/v1/random"}
-            alt={profile.nickname}
-          />}
-        content={
-          <Editor
-            onSubmit={onSubmit}
-            value={value}
-            onChange={onChange}
-            submitting={commentLoading}
-          />
-        }
+      <SendComment
+        handleSubmit={handleSubmit}
+        commentLoading={commentLoading}
       />
       <List
         className="comment-list"
         header='精彩评论'
         itemLayout="horizontal"
         dataSource={hotComment}
-        renderItem={item => (
+        renderItem={(item, idx) => (
           <li>
             <Comment
               actions={
                 [
                   <div className='flex'>
-                    <span className='pointer' onClick={() => clickReplay(item)}>回复</span>
-                    <div onClick={() => clickLike(item, 'hot')} className={'pointer ' + (item.liked ? 'like' : '')}>
-                      <FireFilled />
+                    <span className='pointer' onClick={() => clickReplay(item, idx ,'hot')}>回复</span>
+                    <div onClick={() => clickLike(item, 'hot')} className='pointer'>
+                      {
+                        item.liked ? (
+                          <FireFilled className='icon' />
+                        ) : (
+                          <FireOutlined className='icon' />
+                        )
+                      }
                       （{item.likedCount}）
                     </div>
                   </div>
                 ]
               }
-              author={item.nickname}
+              author={author(item)}
               avatar={item.avatarUrl}
               content={item.content}
               datetime={item.timeStr}
-            />
+            >
+              {
+                item.beReplied.length && item.beReplied[0].user && (
+                  <SubCommentsStyle>
+                    <Comment
+                      author={author(item.beReplied[0].user)}
+                      avatar={item.beReplied[0].user.avatarUrl}
+                      content={item.beReplied[0].content}
+                    />
+                  </SubCommentsStyle>
+                )
+              }
+            </Comment>
+            {
+              item.isReplay && (
+                <ReplayStyle>
+                  <SendComment
+                    replayTo={item}
+                    rows={2}
+                    handleSubmit={handleSubmit}
+                    commentLoading={commentLoading}
+                    size='small'
+                  />
+                </ReplayStyle>
+              )
+            }
           </li>
         )}
       />
@@ -123,29 +133,64 @@ const Comments = memo((props) => {
         header='最新评论'
         itemLayout="horizontal"
         dataSource={newComment}
-        renderItem={item => (
+        renderItem={(item, idx) => (
           <li>
             <Comment
               actions={
                 [
                   <div className='flex'>
-                    <span className='pointer' onClick={() => clickReplay(item)}>回复</span>
-                    <div onClick={() => clickLike(item, 'new')} className={'pointer ' + (item.liked ? 'like' : '')}>
-                      <FireFilled className='pointer' />
+                    <span className='pointer' onClick={() => clickReplay(item, idx, 'new')}>回复</span>
+                    <div onClick={() => clickLike(item, 'new')} className='pointer'>
+                      {
+                        item.liked ? (
+                          <FireFilled className='icon' />
+                        ) : (
+                          <FireOutlined className='icon' />
+                        )
+                      }
                       （{item.likedCount}）
                     </div>
                   </div>
                 ]
               }
-              author={item.nickname}
+              author={author(item)}
               avatar={item.avatarUrl}
               content={item.content}
               datetime={item.timeStr}
-            />
+            >
+              {
+                item.beReplied.length && item.beReplied[0].user && (
+                  <SubCommentsStyle>
+                    <Comment
+                      author={author(item.beReplied[0].user)}
+                      avatar={item.beReplied[0].user.avatarUrl}
+                      content={item.beReplied[0].content}
+                    />
+                  </SubCommentsStyle>
+                )
+              }
+            </Comment>
+            {
+              item.isReplay && (
+                <ReplayStyle>
+                  <SendComment
+                    replayTo={item}
+                    rows={2}
+                    handleSubmit={handleSubmit}
+                    commentLoading={commentLoading}
+                    size='small'
+                  />
+                </ReplayStyle>
+              )
+            }
           </li>
         )}
       />
-      <Cpagination current={current} total={commentsTotal} handleChange={(e) => changePage(e)} />
+      <Cpagination
+        current={current}
+        total={commentsTotal}
+        handleChange={(e) => changePage(e)}
+      />
     </CommentsStyle>
   )
 })
