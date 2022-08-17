@@ -48,3 +48,24 @@ export function getDJTopList(cateId, limit = 20, offset) {
   })
 }
 
+export function getDJDetails(rid) {
+  return request({
+    url: '/dj/detail',
+    params: {
+      rid,
+    }
+  })
+}
+
+export function getDJProgram(rid, limit = 30, offset, asc) {
+  return request({
+    url: '/dj/program',
+    params: {
+      rid,
+      limit,
+      offset,
+      asc
+    }
+  })
+}
+

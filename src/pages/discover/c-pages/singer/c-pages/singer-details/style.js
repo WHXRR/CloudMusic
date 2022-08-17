@@ -10,7 +10,6 @@ export const SingerDetailsStyle = styled.div`
     background-image: url('${props => props.src}');
   }
   .details-name {
-    padding-bottom: 15px;
     font-size: 30px;
     font-weight: 700;
     text-align: center;

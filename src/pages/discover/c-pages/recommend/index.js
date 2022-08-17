@@ -4,7 +4,9 @@ import TopBanners from './c-cpns/top-banners'
 import Hot from './c-cpns/hot'
 import NewDisc from './c-cpns/new-disc'
 import List from './c-cpns/list'
-import LookMore from '@/components/look-more'
+import FillText from '@/components/fill-text'
+
+import { RightCircleFilled } from '@ant-design/icons'
 
 import { Title, GreyBG, Container } from './style'
 import { NavLink } from 'react-router-dom'
@@ -20,7 +22,9 @@ const Recommend = memo((props) => {
         </Title>
         <Hot {...props} />
         <NavLink to='/discover/songsheet'>
-          <LookMore style={{ paddingTop: '50px' }} fontSize='16px' speed='.6s' />
+          <FillText style={{ paddingTop: '50px' }} fontSize='16px' speed='.6s'>
+            查看更多<RightCircleFilled style={{ marginLeft: '5px' }} />
+          </FillText>
         </NavLink>
       </Container>
       <GreyBG>
@@ -30,9 +34,11 @@ const Recommend = memo((props) => {
             <div className='sub-title'>New disc on shelves</div>
           </Title>
           <NewDisc {...props} />
-        <NavLink to='/discover/newdisc'>
-          <LookMore style={{ paddingTop: '50px' }} fontSize='16px' speed='.6s' />
-        </NavLink>
+          <NavLink to='/discover/newdisc'>
+            <FillText style={{ paddingTop: '50px' }} fontSize='16px' speed='.6s'>
+              查看更多<RightCircleFilled style={{ marginLeft: '5px' }} />
+            </FillText>
+          </NavLink>
         </Container>
       </GreyBG>
       <Container>
@@ -42,7 +48,9 @@ const Recommend = memo((props) => {
         </Title>
         <List {...props} />
         <NavLink to='/discover/rankinglist'>
-          <LookMore style={{ paddingTop: '50px' }} fontSize='16px' speed='.6s' />
+          <FillText style={{ paddingTop: '50px' }} fontSize='16px' speed='.6s'>
+            查看更多<RightCircleFilled style={{ marginLeft: '5px' }} />
+          </FillText>
         </NavLink>
       </Container>
     </div>

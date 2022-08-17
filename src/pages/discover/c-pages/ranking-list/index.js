@@ -6,8 +6,8 @@ import { getTopListAction, getCurrentTopListAction, getTopListDetailsAction } fr
 
 import DetailContent from '@/components/detail-content'
 import TopListComment from './c-pages/comment'
-import DetailsBtns from '@/components/detailsBtns'
-import SongTable from '@/components/songTable'
+import DetailsBtns from '@/components/details-btns'
+import SongTable from '@/components/song-table'
 
 import { Drawer, Tag } from 'antd'
 import {

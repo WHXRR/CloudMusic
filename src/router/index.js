@@ -9,6 +9,7 @@ import AnchorStation from '@/pages/discover/c-pages/anchor-station'
 import Singer from '@/pages/discover/c-pages/singer'
 import NewDisc from '@/pages/discover/c-pages/new-disc'
 import SongDetail from '@/pages/discover/c-pages/song-detail'
+import DJDetails from '@/pages/discover/c-pages/anchor-station/c-pages/dj-details'
 import SongListDetails from '@/pages/discover/c-pages/song-list-details'
 import AlbumDetails from '@/pages/discover/c-pages/album-details'
 import SingerDetails from '@/pages/discover/c-pages/singer/c-pages/singer-details'
@@ -50,6 +51,10 @@ const routes = [
       {
         path: '/discover/anchorstation',
         component: AnchorStation
+      },
+      {
+        path: '/discover/dj/:id',
+        component: DJDetails
       },
       {
         path: '/discover/singer',

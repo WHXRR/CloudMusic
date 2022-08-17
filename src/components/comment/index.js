@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 
 import Cpagination from '@/components/pagination'
-import SendComment from '../sendComment'
+import SendComment from '../send-comment'
 
 import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 import { changeDialogVisibleAction } from '@/components/login-dialog/store/actionCreators'

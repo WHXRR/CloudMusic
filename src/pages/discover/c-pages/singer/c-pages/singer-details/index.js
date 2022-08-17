@@ -8,8 +8,10 @@ import Mv from '../mv'
 import Album from '../album'
 import Desc from '../desc'
 import NormalSongStyle from '@/components/normal-song-style'
+import FillText from '@/components/fill-text'
 
 import { Tabs, List } from 'antd';
+import { RightCircleFilled } from '@ant-design/icons'
 
 import {
   SingerDetailsStyle
@@ -59,7 +61,7 @@ const SingerDetails = memo((props) => {
     dispatch(getSingerDetailsAction(params.id))
     dispatch(getTopSingerAction())
   }, [dispatch, params])
-  
+
   useEffect(() => {
     backTop()
   }, [props.match.params.id])
@@ -76,10 +78,21 @@ const SingerDetails = memo((props) => {
   }
 
   return (
-    <SingerDetailsStyle src={details.cover}>
+    <SingerDetailsStyle src={details.artist?.cover}>
       <div className='singer-img' />
       <div className='card-container'>
-        <div className='details-name'>{details.name}</div>
+        <FillText style={{ height: '35px' }}>
+          <div className='details-name'>{details.artist?.name}</div>
+        </FillText>
+        <FillText style={{ height: '20px', marginBottom: '10px' }} initColor='#878787'>
+          <span
+            onClick={() => props.history.push(`/user/home/${details.user?.userId}`)}
+            style={{ paddingRight: '5px' }}
+          >
+            查看个人主页
+          </span>
+          <RightCircleFilled />
+        </FillText>
         <Tabs
           activeKey={activeKey}
           onTabClick={handleTabClick}

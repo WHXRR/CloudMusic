@@ -61,7 +61,7 @@ export const getSingerListAction = (area, type, initial, limit, offset) => {
 export const getSingerDetailsAction = (id) => {
   return dispatch => {
     singerService.getSingerDetails(id).then(res => {
-      dispatch(changeSingerDetailsAction(res.data.artist))
+      dispatch(changeSingerDetailsAction(res.data))
     })
   }
 }

@@ -19,6 +19,16 @@ export const changeDJTopListAction = djList => ({
   djList
 })
 
+export const changeDJDetailsAction = details => ({
+  type: actionTypes.CHANGE_DJ_DETAILS,
+  details
+})
+
+export const changeDJProgramAction = program => ({
+  type: actionTypes.CHANGE_DJ_PROGRAM,
+  program
+})
+
 // --------------------------------------------------------network--------------------------------------------------------
 export const getDJCateAction = () => {
   return dispatch => {
@@ -60,6 +70,22 @@ export const getDJTopListAction = (cateId, limit, offset) => {
   return dispatch => {
     djService.getDJTopList(cateId, limit, offset).then(res => {
       dispatch(changeDJTopListAction(res.djRadios))
+    })
+  }
+}
+
+export const getDJDetailsAction = (rid) => {
+  return dispatch => {
+    djService.getDJDetails(rid).then(res => {
+      dispatch(changeDJDetailsAction(res.data))
+    })
+  }
+}
+
+export const getDJProgramAction = (rid, limit, offset, asc) => {
+  return dispatch => {
+    djService.getDJProgram(rid, limit, offset, asc).then(res => {
+      dispatch(changeDJProgramAction(res))
     })
   }
 }

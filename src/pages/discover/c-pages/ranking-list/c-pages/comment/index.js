@@ -76,7 +76,6 @@ const TopListComment = memo(() => {
   const [commentLoading, changeLoading] = useState(false)
   const handleSubmit = useCallback(
     (content, replayTo) => {
-      console.log({replayTo});
       changeLoading(true)
       handleComment(currentList.id, content, replayTo ? 2 : 1, 2, replayTo ? replayTo.commentId : null).then(res => {
         if (res.code === 200) {

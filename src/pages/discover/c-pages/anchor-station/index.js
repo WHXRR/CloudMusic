@@ -16,7 +16,7 @@ import { DJStyle, DJCateItem } from './style'
 import NormalSongStyle from '@/components/normal-song-style'
 import FlexSongStyle from '@/components/flex-song-style'
 
-const AnchorStation = memo(() => {
+const AnchorStation = memo((props) => {
   const dispatch = useDispatch()
 
   const { cateList, hotList, djList } = useSelector(
@@ -72,6 +72,7 @@ const AnchorStation = memo(() => {
                     style={{ margin: '0 auto' }}
                     className='item'
                     badge
+                    onClick={() => props.history.push(`/discover/dj/${item.id}`)}
                   >
                     <div className='tips'>{item.category}</div>
                   </NormalSongStyle>
@@ -91,6 +92,7 @@ const AnchorStation = memo(() => {
                     {...item}
                     singerName={item.creatorName}
                     badge
+                    onClick={() => props.history.push(`/discover/dj/${item.id}`)}
                   >
                     <div className='desc'>{item.rcmdtext}</div>
                     <div className='desc'>共{item.programCount}期</div>

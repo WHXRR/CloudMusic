@@ -3,7 +3,7 @@ import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { getSingerHotSongAction } from '../../store/actionCreators'
 
-import SongTable from '@/components/songTable'
+import SongTable from '@/components/song-table'
 
 import { formatMinuteSecond } from '@/utils/format-utils.js'
 

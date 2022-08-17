@@ -167,3 +167,10 @@ export function parseTime(time, cFormat) {
   // eslint-disable-next-line camelcase
   return time_str
 }
+
+export function formatTime(date) {
+  let time = new Date(date)
+  return (
+    <span>{time.getFullYear()}-{time.getMonth() + 1}-{time.getDate()}</span>
+  )
+}

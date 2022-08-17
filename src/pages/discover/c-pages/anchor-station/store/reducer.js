@@ -4,7 +4,9 @@ import * as actionTypes from './constants'
 const defaultState = Map({
   cateList: [],
   hotList: [],
-  djList: []
+  djList: [],
+  details: {},
+  program: []
 })
 
 function reducer(state = defaultState, action) {
@@ -15,6 +17,10 @@ function reducer(state = defaultState, action) {
       return state.set('hotList', action.hotList)
     case actionTypes.CHANGE_DJ_TOP_LIST:
       return state.set('djList', action.djList)
+    case actionTypes.CHANGE_DJ_DETAILS:
+      return state.set('details', action.details)
+    case actionTypes.CHANGE_DJ_PROGRAM:
+      return state.set('program', action.program)
     default:
       return state
   }

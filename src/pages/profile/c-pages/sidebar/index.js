@@ -17,7 +17,6 @@ const ProfileSidebar = memo((props) => {
     }),
     shallowEqual
   )
-  console.log({ props });
 
   return (
     <ProfileStyle>

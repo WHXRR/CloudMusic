@@ -3,8 +3,8 @@ import React, { memo, useEffect } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { getSongListDetailsAction } from '../../store/actionCreators'
 
-import DetailsBtns from '@/components/detailsBtns'
-import SongTable from '@/components/songTable'
+import DetailsBtns from '@/components/details-btns'
+import SongTable from '@/components/song-table'
 
 import { Tag } from 'antd'
 

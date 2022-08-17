@@ -6,7 +6,7 @@ import { getBannersAction, getLyricAction } from './store/actionCreators'
 import DetailContent from '@/components/detail-content'
 import Comments from './c-cpns/comments'
 import SimiSong from './c-cpns/simi-song'
-import DetailsBtns from '@/components/detailsBtns'
+import DetailsBtns from '@/components/details-btns'
 
 import { SongDetailStyle } from './style'
 
