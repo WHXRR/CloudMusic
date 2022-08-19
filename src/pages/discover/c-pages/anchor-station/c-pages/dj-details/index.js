@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState, useCallback } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { getDJDetailsAction, getDJProgramAction } from '../../store/actionCreators'
-import { changeShowFlagAction, getCurrentSongAction } from '@/components/player/store/actionCreators'
+// import { changeShowFlagAction, getCurrentSongAction } from '@/components/player/store/actionCreators'
 
 import Cpagination from '@/components/pagination'
 
@@ -55,10 +55,14 @@ const DJDetails = memo((props) => {
   )
 
   const [flag, setFlag] = useState(false)
-  const handleSort = data => {
-    setFlag(data)
-    dispatch(getDJProgramAction(params.id, 30, null, data))
-  }
+  const handleSort = useCallback(
+    data => {
+      setFlag(data)
+      changeCurrent(1)
+      dispatch(getDJProgramAction(params.id, 30, null, data))
+    },
+    [dispatch, params.id]
+  )
 
   return (
     <DJDetailsStyle>

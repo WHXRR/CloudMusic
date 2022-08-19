@@ -10,25 +10,22 @@ import { SimiSongStyle } from './style'
 
 const SimiSongList = memo((props) => {
   
-  const { singerId } = props
   const dispatch = useDispatch()
-  const { otherAlbum } = useSelector(
+  const { otherAlbum, details } = useSelector(
     state => ({
+      details: state.getIn(['albumDetails', 'details']),
       otherAlbum: state.getIn(['albumDetails', 'otherAlbum']),
     }),
     shallowEqual
   )
 
   useEffect(() => {
-    dispatch(getOtherAlbumAction(singerId))
-  }, [dispatch, singerId])
+    dispatch(getOtherAlbumAction(details.album?.artist?.id))
+  }, [dispatch, details])
 
   const handleClick = item => {
     props.history.push({
       pathname: `/discover/albumdetails/${item.id}`,
-      state: {
-        singerId: item.artist.id
-      }
     })
   }
 

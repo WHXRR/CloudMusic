@@ -15,7 +15,10 @@ import AlbumDetails from '@/pages/discover/c-pages/album-details'
 import SingerDetails from '@/pages/discover/c-pages/singer/c-pages/singer-details'
 
 import Mine from '@/pages/mine'
+
 import Friends from '@/pages/friends'
+
+import SearchResult from '@/pages/search'
 
 import Profile from '../pages/profile'
 
@@ -89,6 +92,10 @@ const routes = [
   {
     path: '/mine',
     component: Mine
+  },
+  {
+    path: '/search',
+    component: SearchResult
   },
   {
     path: '/user/home/:id',

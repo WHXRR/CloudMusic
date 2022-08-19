@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect } from 'react'
 
 
 import DetailContent from '@/components/detail-content'
@@ -11,18 +11,6 @@ import { backTop } from '@/utils/back-top'
 const SongDetail = memo((props) => {
 
   const { params } = props.match
-
-  const [singerId, changeSingerId] = useState(0)
-
-  if (!singerId) {
-    if (props.location.state) {
-      changeSingerId(props.location.state.singerId)
-      sessionStorage.setItem('singerId', props.location.state.singerId);
-    } else {
-      const id = sessionStorage.getItem('singerId')
-      changeSingerId(id)
-    }
-  }
 
   useEffect(() => {
     backTop()
@@ -37,7 +25,7 @@ const SongDetail = memo((props) => {
         <SongListComment {...props} />
       </DetailContent>
       <DetailContent name='otherInfo'>
-        <OtherAlbum {...props} singerId={singerId} />
+        <OtherAlbum {...props} />
       </DetailContent>
     </>
   )

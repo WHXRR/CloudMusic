@@ -64,12 +64,7 @@ const NewDisc = memo((props) => {
   }
 
   const onClick = (data) => {
-    props.history.push({
-      pathname: `/discover/albumdetails/${data.id}`,
-      state: {
-        singerId: data.artist.id
-      }
-    })
+    props.history.push(`/discover/albumdetails/${data.id}`)
   }
 
   const [current, changeCurrent] = useState(1)

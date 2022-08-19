@@ -24,12 +24,7 @@ const Album = memo((props) => {
   }, [dispatch, params])
 
   const onClick = (data) => {
-    props.history.push({
-      pathname: `/discover/albumdetails/${data.id}`,
-      state: {
-        singerId: data.artist.id
-      }
-    })
+    props.history.push(`/discover/albumdetails/${data.id}`)
   }
 
   return (

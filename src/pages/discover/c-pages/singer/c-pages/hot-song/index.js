@@ -52,12 +52,7 @@ const HotSong = memo((props) => {
   ]
 
   const toLink = (data) => {
-    props.history.push({
-      pathname: `/discover/albumdetails/${data.al.id}`,
-      state: {
-        singerId: data.ar[0].id
-      }
-    })
+    props.history.push(`/discover/albumdetails/${data.al.id}`)
   }
 
   return (

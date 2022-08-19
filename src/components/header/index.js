@@ -17,7 +17,6 @@ import {
 } from '@ant-design/icons';
 import {
   Dropdown,
-  Input,
   Menu,
   Drawer,
   Avatar,
@@ -26,6 +25,7 @@ import {
 
 import { menu } from '@/common/header_menu'
 import LoginDialog from '../login-dialog';
+import Search from './c-pages/search'
 
 import {
   HearderWrapper,
@@ -35,7 +35,6 @@ import {
 const { confirm } = Modal;
 
 const Header = memo(() => {
-
   const dispatch = useDispatch()
   const { token, profile } = useSelector(
     state => ({
@@ -213,13 +212,14 @@ const Header = memo(() => {
           <NavLink className='white' to="/friends">我的朋友</NavLink>
           <NavLink className='white' to="/mine">我的音乐</NavLink>
         </div>
-        <Input
+        {/* <Input
           className='search-ipt'
           placeholder="随便输..."
           suffix={
             <SearchOutlined className='search-icon' />
           }
-        />
+        /> */}
+        <Search />
         <SearchOutlined className='search-icon search-icon-xs pointer' />
       </HearderWrapper>
       <Drawer

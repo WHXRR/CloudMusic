@@ -31,12 +31,7 @@ const SongList = memo((props) => {
   const { params } = props.match
 
   const toLink = (data) => {
-    props.history.push({
-      pathname: `/discover/albumdetails/${data.al.id}`,
-      state: {
-        singerId: data.singer[0].id
-      }
-    })
+    props.history.push(`/discover/albumdetails/${data.al.id}`)
   }
   const columns = [
     {
