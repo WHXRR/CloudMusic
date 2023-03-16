@@ -11,8 +11,6 @@ import Header from './components/header'
 import Footer from './components/footer'
 import Player from './components/player'
 import ProfileSidebar from './pages/profile/c-pages/sidebar'
-console.log('test');
-console.log('test111');
 const App = memo(() => {
   return (
     <Provider store={store}>
@@ -27,5 +25,5 @@ const App = memo(() => {
     </Provider>
   )
 })
-
+console.log('test');
 export default App
