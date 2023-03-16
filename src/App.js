@@ -25,5 +25,4 @@ const App = memo(() => {
     </Provider>
   )
 })
-console.log('test');
 export default App
