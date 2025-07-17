@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# 🎵 网易云音乐 Web 版（React + Node.js）
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+这是一个基于 React 的网易云音乐 Web 实现项目，前端使用 React + Ant Design + Redux 技术栈，后端调用了 [网易云音乐 Node.js API 服务](https://github.com/WHXRR/NeteaseCloudMusicApi)，实现了搜索、播放、歌词、排行榜等核心功能。
 
-## Available Scripts
+在线预览地址 👉 [点击访问](https://whxrr.github.io/CloudMusic/)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ✨ 功能特性
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 🔍 音乐搜索（关键词）
+- 📻 热门推荐、排行榜
+- 🎧 歌曲播放（支持进度控制）
+- 📝 歌词同步滚动显示
+- 👤 歌手详情页
+- 📦 完整 Redux 状态管理架构
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🛠 技术栈
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 前端
 
-### `npm run build`
+- **React 18 + CRA（Create React App）**
+- **Ant Design** UI 框架（支持自定义主题）
+- **Redux + redux-thunk + redux-immutable** 状态管理
+- **craco + craco-less** 替代 eject，实现更灵活的配置
+- **axios** 请求数据
+- **styled-components** 样式管理
+- **nprogress** 页面加载进度条
+- **prop-types** 类型校验
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 后端
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [Binaryify/NeteaseCloudMusicApi](https://github.com/WHXRR/NeteaseCloudMusicApi)
+  - 第三方网易云音乐 Node.js API
+  - 提供登录、播放、搜索、歌单、歌词、评论等接口
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
