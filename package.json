@@ -1,7 +1,7 @@
 {
   "name": "react-test",
   "version": "0.1.0",
-  "homepage": "https://github.com/WHXRR/CloudMusic",
+  "homepage": "https://whxrr.github.io/CloudMusic",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
