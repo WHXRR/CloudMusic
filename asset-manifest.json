@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/WHXRR/CloudMusic/static/css/main.1094889d.css",
-    "main.js": "/WHXRR/CloudMusic/static/js/main.515730d0.js",
-    "static/media/bg.jpg": "/WHXRR/CloudMusic/static/media/bg.474cf247a58eef58ff2e.jpg",
-    "static/media/music2.svg": "/WHXRR/CloudMusic/static/media/music2.22ee7861bba0202f3b22c62ef9a9ddd0.svg",
-    "static/media/音乐.svg": "/WHXRR/CloudMusic/static/media/音乐.a01220a8ec2debe2ba105cb59a5b9627.svg",
-    "index.html": "/WHXRR/CloudMusic/index.html",
-    "main.1094889d.css.map": "/WHXRR/CloudMusic/static/css/main.1094889d.css.map",
-    "main.515730d0.js.map": "/WHXRR/CloudMusic/static/js/main.515730d0.js.map"
+    "main.css": "/CloudMusic/static/css/main.1094889d.css",
+    "main.js": "/CloudMusic/static/js/main.67fb8c80.js",
+    "static/media/bg.jpg": "/CloudMusic/static/media/bg.474cf247a58eef58ff2e.jpg",
+    "static/media/music2.svg": "/CloudMusic/static/media/music2.22ee7861bba0202f3b22c62ef9a9ddd0.svg",
+    "static/media/音乐.svg": "/CloudMusic/static/media/音乐.a01220a8ec2debe2ba105cb59a5b9627.svg",
+    "index.html": "/CloudMusic/index.html",
+    "main.1094889d.css.map": "/CloudMusic/static/css/main.1094889d.css.map",
+    "main.67fb8c80.js.map": "/CloudMusic/static/js/main.67fb8c80.js.map"
   },
   "entrypoints": [
     "static/css/main.1094889d.css",
-    "static/js/main.515730d0.js"
+    "static/js/main.67fb8c80.js"
   ]
 }
